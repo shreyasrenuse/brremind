@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BRemind — Coming Soon</title>
+<script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-[#0c0c1f] text-white font-sans">
+
+<!-- HERO SECTION -->
+<section class="min-h-screen flex flex-col items-center justify-center text-center px-6">
+  <h1 class="text-4xl md:text-6xl font-bold text-[#ffd16c] mb-4">BRemind</h1>
+  <p class="text-lg md:text-xl text-gray-300 mb-6 max-w-xl">
+    Unlock your mind through your breath using ancient Swara Yoga.
+  </p>
+  
+  <button onclick="scrollToWaitlist()" class="bg-[#ffd16c] text-black px-6 py-3 rounded-full font-bold hover:scale-105 transition">
+    Join Early Access
+  </button>
+
+  <p class="mt-4 text-sm text-gray-400">🚀 Early users getting exclusive access</p>
+</section>
+
+<!-- PROBLEM SECTION -->
+<section class="px-6 py-16 text-center">
+  <h2 class="text-2xl md:text-3xl font-bold mb-4">Why You Feel Distracted</h2>
+  <p class="text-gray-400 max-w-xl mx-auto">
+    Stress, lack of focus, emotional imbalance — all come from unregulated breath patterns.
+  </p>
+</section>
+
+<!-- SOLUTION SECTION -->
+<section class="px-6 py-16 text-center bg-[#111127]">
+  <h2 class="text-2xl md:text-3xl font-bold mb-4">The Solution</h2>
+  <p class="text-gray-400 max-w-xl mx-auto">
+    BRemind combines Swara Yoga, breath science, and gamification to train your mind.
+  </p>
+</section>
+
+<!-- FEATURES -->
+<section class="px-6 py-16">
+  <h2 class="text-2xl md:text-3xl font-bold text-center mb-10">Your Growth Dashboard</h2>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-4xl mx-auto">
+    <div class="bg-[#17172f] p-4 rounded-xl text-center">
+      <h3 class="text-xl font-bold text-blue-300">BQ</h3>
+      <p class="text-sm text-gray-400">Breath Quotient</p>
+    </div>
+    <div class="bg-[#17172f] p-4 rounded-xl text-center">
+      <h3 class="text-xl font-bold text-yellow-300">FQ</h3>
+      <p class="text-sm text-gray-400">Focus Quotient</p>
+    </div>
+    <div class="bg-[#17172f] p-4 rounded-xl text-center">
+      <h3 class="text-xl font-bold text-orange-400">CQ</h3>
+      <p class="text-sm text-gray-400">Cognitive Quotient</p>
+    </div>
+    <div class="bg-[#17172f] p-4 rounded-xl text-center">
+      <h3 class="text-xl font-bold text-pink-400">EQ</h3>
+      <p class="text-sm text-gray-400">Emotional Quotient</p>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section id="waitlist" class="px-6 py-20 text-center bg-[#111127]">
+  <h2 class="text-2xl md:text-3xl font-bold mb-4">Join the Waitlist</h2>
+  <p class="text-gray-400 mb-6">Be among the first to experience breath intelligence.</p>
+
+  <form onsubmit="handleSubmit(event)" class="flex flex-col md:flex-row gap-3 justify-center max-w-xl mx-auto">
+    <input type="email" required placeholder="Enter your email" class="px-4 py-3 rounded-full text-black w-full">
+    <button type="submit" class="bg-[#ffd16c] text-black px-6 py-3 rounded-full font-bold">Join</button>
+  </form>
+
+  <p id="success-msg" class="text-green-400 mt-4 hidden">✅ You're on the list!</p>
+</section>
+
+<!-- APP PREVIEW BUTTON -->
+<section class="px-6 py-16 text-center">
+  <h2 class="text-2xl font-bold mb-4">Preview the App</h2>
+  <button onclick="openApp()" class="border border-gray-500 px-6 py-3 rounded-full hover:bg-white hover:text-black transition">
+    Open Demo
+  </button>
+</section>
+
+<script>
+function scrollToWaitlist() {
+  document.getElementById('waitlist').scrollIntoView({ behavior: 'smooth' });
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('success-msg').classList.remove('hidden');
+}
+
+function openApp() {
+  window.location.href = "./app.html"; // your original file
+}
+</script>
+
+</body>
+</html>
