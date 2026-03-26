@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html class="dark" lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1.0" name="viewport"/>
+<title>BRemind — The Science of Breath & Mind</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&family=Manrope:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script>
+tailwind.config={darkMode:"class",theme:{extend:{
+  colors:{"primary":"#ffd16c","primary-container":"#fdc003","secondary":"#ff734a","tertiary":"#81ecff","tertiary-dim":"#00d4ec","surface":"#0c0c1f","surface-container":"#17172f","surface-container-low":"#111127","surface-container-high":"#1d1d37","surface-container-highest":"#23233f","on-surface":"#e5e3ff","on-surface-variant":"#aaa8c3","outline":"#74738b","outline-variant":"#46465c","background":"#0c0c1f","error":"#ff6e84"},
+  fontFamily:{"headline":["Plus Jakarta Sans"],"body":["Manrope"],"label":["Space Grotesk"]},
+  borderRadius:{"DEFAULT":"0.25rem","lg":"0.5rem","xl":"0.75rem","2xl":"1rem","3xl":"1.5rem","full":"9999px"},
+}}}
+</script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{background:#0c0c1f;color:#e5e3ff;font-family:'Manrope',sans-serif;overflow-x:hidden;min-height:100vh;}
+.material-symbols-outlined{font-variation-settings:'FILL' 0,'wght' 400,'GRAD' 0,'opsz' 24;vertical-align:middle;}
+
+@keyframes spinCW{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@keyframes spinCCW{from{transform:rotate(360deg)}to{transform:rotate(0deg)}}
+@keyframes floatY{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+@keyframes pulseO{0%,100%{opacity:.45}50%{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes waveOut{from{transform:scale(.25);opacity:.65}to{transform:scale(3.2);opacity:0}}
+@keyframes flame{0%,100%{transform:scaleY(1) rotate(-3deg)}50%{transform:scaleY(1.12) rotate(3deg)}}
+@keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+@keyframes balloonBob{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
+@keyframes breathPulse{0%,100%{transform:scale(1);opacity:.5}50%{transform:scale(1.16);opacity:1}}
+@keyframes pring{transition:stroke-dashoffset 1.2s ease}
+@keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}}
+@keyframes eyeBlink{0%,90%,100%{transform:scaleY(1)}95%{transform:scaleY(.1)}}
+@keyframes waveExpand{from{transform:scale(0);opacity:.6}to{transform:scale(3);opacity:0}}
+
+.av-ring-cw{animation:spinCW var(--dur,12s) linear infinite;transform-origin:var(--ox,50%) var(--oy,50%);}
+.av-ring-ccw{animation:spinCCW var(--dur,16s) linear infinite;transform-origin:var(--ox,50%) var(--oy,50%);}
+.av-float{animation:floatY 3s ease-in-out infinite;}
+.av-pulse{animation:pulseO 2.5s ease-in-out infinite;}
+.char-float{animation:charFloat 3.2s ease-in-out infinite;}
+.eye-blink{animation:eyeBlink 4s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}
+.flame-anim{animation:flame .5s ease-in-out infinite;display:inline-block;}
+.xp-bar-grad{background:linear-gradient(90deg,#ffd16c,#ff734a);background-size:200% auto;animation:shimmer 3s linear infinite;}
+.segment-card{transition:all .28s cubic-bezier(.4,0,.2,1);cursor:pointer;}
+.segment-card:hover{transform:translateY(-3px);}
+.glass{background:rgba(35,35,63,.6);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border:1px solid rgba(70,70,92,.15);}
+.btn-gold{background:linear-gradient(135deg,#ffd16c,#fdc003);color:#3d2b00;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;transition:all .2s;border:none;cursor:pointer;}
+.btn-gold:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(255,209,108,.35);}
+.btn-outline{background:transparent;border:1.5px solid rgba(70,70,92,.45);color:#aaa8c3;cursor:pointer;transition:all .2s;font-family:'Manrope',sans-serif;}
+.btn-outline:hover{border-color:#aaa8c3;color:#e5e3ff;}
+.screen{display:none;}
+.screen.active{display:block;animation:fadeIn .32s ease;}
+.pring-el{transition:stroke-dashoffset 1.2s ease;transform:rotate(-90deg);transform-origin:50% 50%;}
+.tw-earth{border-radius:8px;}.tw-water{border-radius:50% 0 50% 0;}.tw-fire{clip-path:polygon(50% 0%,0% 100%,100% 100%);}.tw-air{clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);}.tw-space{border-radius:50%;}
+::-webkit-scrollbar{width:3px;}::-webkit-scrollbar-track{background:transparent;}::-webkit-scrollbar-thumb{background:rgba(70,70,92,.5);border-radius:2px;}
+.bottom-nav{background:rgba(12,12,31,.92);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);border-top:1px solid rgba(70,70,92,.18);}
+.nav-btn .nav-ico,.nav-btn .nav-lbl{transition:color .2s;}
+.nav-btn.nav-active .nav-ico{color:#ffd16c !important;}.nav-btn.nav-active .nav-lbl{color:#ffd16c !important;}
+#av-modal{display:none;position:fixed;inset:0;z-index:80;background:rgba(8,8,20,.88);backdrop-filter:blur(14px);align-items:flex-end;justify-content:center;padding:0;}
+#av-modal.open{display:flex;animation:fadeIn .28s ease;}
+.nostril-card{background:#17172f;border-radius:16px;padding:14px;border:2px solid transparent;transition:all .3s;cursor:pointer;}
+.nostril-card.sel-left{border-color:#81ecff;box-shadow:0 0 18px rgba(129,236,255,.18);}
+.nostril-card.sel-right{border-color:#ff734a;box-shadow:0 0 18px rgba(255,115,74,.18);}
+.method-card{background:#17172f;border-radius:14px;padding:12px;border:1.5px solid rgba(70,70,92,.25);margin-bottom:10px;cursor:pointer;transition:all .22s;}
+.method-card:hover{transform:translateX(3px);}
+.method-card.active-m{border-color:var(--ac);}
+.step-dot{width:7px;height:7px;border-radius:50%;background:rgba(70,70,92,.4);transition:all .3s;}
+.step-dot.done{background:#ffd16c;}.step-dot.curr{background:#ffd16c;box-shadow:0 0 8px rgba(255,209,108,.6);transform:scale(1.35);}
+.scanner-result-ida{background:linear-gradient(135deg,rgba(0,83,98,.28),rgba(129,236,255,.07));border:1.5px solid rgba(129,236,255,.3);box-shadow:0 0 28px rgba(129,236,255,.1);}
+.scanner-result-pingala{background:linear-gradient(135deg,rgba(176,47,0,.28),rgba(255,115,74,.07));border:1.5px solid rgba(255,115,74,.3);box-shadow:0 0 28px rgba(255,115,74,.1);}
+.scanner-result-both{background:linear-gradient(135deg,rgba(60,40,0,.3),rgba(255,209,108,.07));border:1.5px solid rgba(255,209,108,.3);}
+</style>
+</head>
+<body>
+
+<!-- ═══ SPLASH ═══ -->
+<div id="splash" class="fixed inset-0 z-50 flex flex-col items-center justify-center" style="background:#0c0c1f;">
+  <div id="splash-stars" class="absolute inset-0 overflow-hidden pointer-events-none"></div>
+  <div class="relative flex items-center justify-center mb-8" style="width:160px;height:160px;">
+    <div class="absolute inset-0 rounded-full" style="border:1px dashed rgba(255,209,108,.18);animation:spinCW 22s linear infinite;"></div>
+    <div class="absolute rounded-full" style="inset:16px;border:1px solid rgba(129,236,255,.2);animation:spinCCW 15s linear infinite;"></div>
+    <div class="absolute rounded-full" style="inset:32px;border:1px dashed rgba(255,115,74,.15);animation:spinCW 11s linear infinite;"></div>
+    <div id="splash-av" style="position:relative;z-index:10;width:72px;height:72px;display:flex;align-items:center;justify-content:center;"></div>
+  </div>
+  <h1 class="font-headline font-extrabold text-5xl" style="color:#ffd16c;text-shadow:0 0 28px rgba(255,209,108,.4);letter-spacing:.06em;">BRemind</h1>
+  <p class="font-body text-xs mt-2" style="color:#aaa8c3;letter-spacing:.22em;">THE SCIENCE OF BREATH & MIND</p>
+  <div class="mt-10 flex flex-col items-center gap-2">
+    <div class="w-52 h-1 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);">
+      <div id="splash-bar" class="h-full rounded-full xp-bar-grad" style="width:0%;transition:width .04s linear;"></div>
+    </div>
+    <p id="splash-txt" class="font-label text-xs" style="color:#74738b;letter-spacing:.14em;">AWAKENING BREATH INTELLIGENCE...</p>
+  </div>
+</div>
+
+<!-- ═══ AVATAR EVOLUTION MODAL ═══ -->
+<div id="av-modal">
+  <div class="w-full rounded-t-3xl p-5 pb-8 relative" style="background:#111127;border-top:1px solid rgba(70,70,92,.3);max-height:88vh;overflow-y:auto;max-width:430px;">
+    <div class="flex items-center justify-between mb-4">
+      <div>
+        <p class="font-label text-xs" style="color:#aaa8c3;letter-spacing:.12em;">YOUR AVATAR</p>
+        <h2 id="am-title" class="font-headline font-bold text-xl mt-0.5" style="color:#ffd16c;"></h2>
+      </div>
+      <button onclick="closeAvModal()" class="w-9 h-9 rounded-full flex items-center justify-center glass"><span class="material-symbols-outlined" style="font-size:20px;color:#aaa8c3;">close</span></button>
+    </div>
+    <!-- Gender toggle -->
+    <div class="flex gap-2 mb-4">
+      <button id="am-gb-boy" onclick="setAvGender('boy')" class="flex-1 py-2 rounded-full font-label text-xs font-semibold transition-all" style="background:rgba(255,209,108,.15);color:#ffd16c;border:1.5px solid #ffd16c;">Boy</button>
+      <button id="am-gb-girl" onclick="setAvGender('girl')" class="flex-1 py-2 rounded-full font-label text-xs font-semibold transition-all" style="background:transparent;color:#74738b;border:1.5px solid rgba(70,70,92,.4);">Girl</button>
+    </div>
+    <!-- Big avatar -->
+    <div class="flex justify-center mb-4">
+      <div id="am-big-av" style="width:200px;height:260px;display:flex;align-items:center;justify-content:center;"></div>
+    </div>
+    <!-- Stage strip -->
+    <div class="flex gap-2 justify-center mb-4" id="am-stages"></div>
+    <!-- Info -->
+    <p id="am-desc" class="font-body text-sm leading-relaxed mb-3" style="color:#aaa8c3;"></p>
+    <div id="am-traits" class="flex gap-2 flex-wrap mb-3"></div>
+    <!-- Glow features -->
+    <div id="am-glows" class="rounded-xl p-3 mb-3" style="background:rgba(255,255,255,.03);"></div>
+    <!-- Progress to next -->
+    <div id="am-next"></div>
+  </div>
+</div>
+
+<!-- ═══ NĀḌĪ SCANNER MODAL ═══ -->
+<div id="scanner-modal" style="display:none;position:fixed;inset:0;z-index:82;background:rgba(8,8,20,.92);backdrop-filter:blur(14px);overflow-y:auto;">
+  <div style="max-width:430px;margin:0 auto;padding:16px 16px 80px;">
+    <div class="flex items-center gap-3 mb-4 pt-2">
+      <button onclick="closeScanner()" class="w-9 h-9 rounded-full flex items-center justify-center glass"><span class="material-symbols-outlined" style="font-size:20px;color:#aaa8c3;">close</span></button>
+      <div>
+        <p class="font-label text-xs" style="color:#81ecff;letter-spacing:.12em;">NĀḌĪ SCANNER</p>
+        <h2 class="font-headline font-bold text-lg" style="color:#e5e3ff;">Detect Your Active Energy</h2>
+      </div>
+    </div>
+    <div id="sc-s0" class="sc-step"></div>
+    <div id="sc-s1" class="sc-step" style="display:none;"></div>
+    <div id="sc-s2" class="sc-step" style="display:none;"></div>
+    <div id="sc-s3" class="sc-step" style="display:none;"></div>
+    <div id="sc-s4" class="sc-step" style="display:none;"></div>
+  </div>
+</div>
+
+<!-- ═══ APP ═══ -->
+<div id="app" class="hidden flex-col" style="min-height:100vh;max-width:430px;margin:0 auto;">
+
+  <!-- TOP BAR -->
+  <div class="sticky top-0 z-40 px-5 py-3 flex items-center justify-between" style="background:rgba(12,12,31,.93);backdrop-filter:blur(20px);border-bottom:1px solid rgba(70,70,92,.14);">
+    <div class="flex items-center gap-2">
+      <div style="width:28px;height:28px;border-radius:50%;background:radial-gradient(circle,rgba(129,236,255,.4),rgba(255,115,74,.2));display:flex;align-items:center;justify-content:center;">
+        <span class="material-symbols-outlined" style="font-size:15px;color:#81ecff;">air</span>
+      </div>
+      <span class="font-headline font-bold text-lg" style="color:#ffd16c;">BRemind</span>
+    </div>
+    <div class="flex items-center gap-2">
+      <div class="flex items-center gap-1 glass px-2.5 py-1.5 rounded-full">
+        <span style="font-size:12px;">⚡</span>
+        <span class="font-label text-xs font-semibold" style="color:#ffd16c;" id="xp-display">1,240 XP</span>
+      </div>
+      <div class="flex items-center gap-1 glass px-2.5 py-1.5 rounded-full">
+        <span class="flame-anim" style="font-size:12px;">🔥</span>
+        <span class="font-label text-xs font-bold" style="color:#ff734a;">7</span>
+      </div>
+      <!-- Topbar avatar -->
+      <div id="topbar-av" style="width:36px;height:36px;cursor:pointer;border-radius:50%;overflow:hidden;" onclick="openAvModal()"></div>
+    </div>
+  </div>
+
+  <div class="flex-1 overflow-y-auto pb-24" id="scroll-area">
+
+    <!-- ═══ HOME ═══ -->
+    <div id="screen-home" class="screen active">
+      <div class="px-5 pt-5 pb-2">
+        <p class="font-body text-sm" style="color:#aaa8c3;">Good morning, Arjun 👋</p>
+        <h2 class="font-headline font-extrabold text-2xl mt-0.5" style="color:#e5e3ff;">Your Breath Journey</h2>
+      </div>
+
+      <!-- AVATAR HERO -->
+      <div class="mx-5 mt-3 rounded-3xl p-4 relative overflow-hidden cursor-pointer" style="background:linear-gradient(135deg,#17172f,#1d1d37);" onclick="openAvModal()">
+        <div class="absolute inset-0 pointer-events-none" style="background:radial-gradient(circle at 70% 40%,rgba(255,209,108,.06) 0%,transparent 65%);"></div>
+        <div class="flex items-center gap-4 relative z-10">
+          <div id="home-av" style="width:110px;height:110px;flex-shrink:0;"></div>
+          <div class="flex-1 min-w-0">
+            <span id="home-av-badge" class="font-label text-xs px-2.5 py-1 rounded-full font-semibold" style="background:rgba(255,209,108,.14);color:#ffd16c;">LVL 2 · FOCUS APPRENTICE</span>
+            <p class="font-headline font-bold text-base mt-1.5" style="color:#e5e3ff;">Arjun's Avatar</p>
+            <p class="font-body text-xs mt-0.5" style="color:#74738b;">Tap to explore your evolution</p>
+            <div class="mt-2.5">
+              <div class="flex justify-between mb-1"><span class="font-label text-xs" style="color:#74738b;">Next form</span><span class="font-label text-xs" style="color:#ffd16c;">1240/1500 XP</span></div>
+              <div class="h-1.5 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div class="h-full rounded-full xp-bar-grad" style="width:82%;"></div></div>
+            </div>
+          </div>
+        </div>
+        <div class="absolute bottom-3 right-4 flex items-center gap-1 opacity-40"><span class="material-symbols-outlined" style="font-size:12px;color:#ffd16c;">touch_app</span><span class="font-label" style="font-size:10px;color:#ffd16c;">View evolution</span></div>
+      </div>
+
+      <!-- NADI SCANNER ENTRY CARD -->
+      <div class="mx-5 mt-3 rounded-3xl p-4 cursor-pointer segment-card" style="background:linear-gradient(135deg,rgba(0,83,98,.25),rgba(12,12,31,.8));border:1.5px solid rgba(129,236,255,.2);" onclick="openScanner()">
+        <div class="flex items-center gap-3">
+          <div style="width:48px;height:48px;border-radius:16px;background:rgba(129,236,255,.1);display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <svg width="28" height="28" viewBox="0 0 28 28">
+              <ellipse cx="9" cy="18" rx="5" ry="4" fill="#81ecff" fill-opacity=".3" style="animation:breathPulse 2s ease-in-out infinite;transform-origin:9px 18px;"/>
+              <ellipse cx="19" cy="18" rx="5" ry="4" fill="#ff734a" fill-opacity=".3" style="animation:breathPulse 2s ease-in-out .7s infinite;transform-origin:19px 18px;"/>
+              <path d="M14,4 C10,4 7,8 6.5,13 C6,16 6,18 8,19.5 C9,20 10,20 11,19.5 C12,19 12.5,18 13,18 L14,18 L15,18 C15.5,18 16,19 17,19.5 C18,20 19,20 20,19.5 C22,18 22,16 21.5,13 C21,8 18,4 14,4Z" fill="#c68642" stroke="#a0672e" stroke-width=".5"/>
+              <ellipse cx="10.5" cy="18" rx="3.5" ry="2.5" fill="#6b3a1f"/>
+              <ellipse cx="17.5" cy="18" rx="3.5" ry="2.5" fill="#6b3a1f"/>
+            </svg>
+          </div>
+          <div class="flex-1">
+            <p class="font-label text-xs" style="color:#81ecff;letter-spacing:.1em;">SWARA YOGA</p>
+            <h4 class="font-headline font-bold text-sm mt-0.5" style="color:#e5e3ff;">Nāḍī Scanner</h4>
+            <p class="font-body text-xs mt-0.5" style="color:#74738b;">Detect your active Iḍā or Piṅgalā energy before training</p>
+          </div>
+          <div style="width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;" class="btn-gold">
+            <span class="material-symbols-outlined" style="font-size:18px;">chevron_right</span>
+          </div>
+        </div>
+        <!-- Active nadi indicator -->
+        <div class="flex items-center gap-3 mt-3 pt-3" style="border-top:1px solid rgba(70,70,92,.2);">
+          <div id="home-nadi-indicator" class="flex items-center gap-2">
+            <div style="width:8px;height:8px;border-radius:50%;background:#ff734a;box-shadow:0 0 8px rgba(255,115,74,.7);animation:pulseO 2s infinite;"></div>
+            <span class="font-label text-xs" style="color:#ff734a;">☀ Piṅgalā active — Great for Maths!</span>
+          </div>
+          <span class="font-label text-xs ml-auto" style="color:#74738b;">Tap to re-scan</span>
+        </div>
+      </div>
+
+      <!-- Quotients -->
+      <div class="px-5 mt-4">
+        <h3 class="font-headline font-bold text-sm mb-3" style="color:#e5e3ff;">Intelligence Quotients</h3>
+        <div class="grid grid-cols-2 gap-3">
+          <div class="rounded-2xl p-4 glass cursor-pointer segment-card" onclick="showScreen('segment1')">
+            <div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 rounded-full flex items-center justify-center" style="background:rgba(129,236,255,.15);"><span class="material-symbols-outlined" style="font-size:15px;color:#81ecff;">water_drop</span></div><span class="font-label text-xs" style="color:#aaa8c3;">BQ</span></div>
+            <div class="font-headline font-extrabold text-3xl" style="color:#81ecff;">72</div>
+            <p class="font-body text-xs mt-0.5" style="color:#74738b;">Breath Quotient</p>
+            <div class="mt-2 h-1 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div style="width:72%;height:100%;background:linear-gradient(90deg,#81ecff,#00d4ec);border-radius:9999px;"></div></div>
+          </div>
+          <div class="rounded-2xl p-4 glass cursor-pointer segment-card" onclick="showScreen('segment2')">
+            <div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 rounded-full flex items-center justify-center" style="background:rgba(255,209,108,.15);"><span class="material-symbols-outlined" style="font-size:15px;color:#ffd16c;">visibility</span></div><span class="font-label text-xs" style="color:#aaa8c3;">FQ</span></div>
+            <div class="font-headline font-extrabold text-3xl" style="color:#ffd16c;">58</div>
+            <p class="font-body text-xs mt-0.5" style="color:#74738b;">Focus Quotient</p>
+            <div class="mt-2 h-1 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div style="width:58%;height:100%;background:linear-gradient(90deg,#ffd16c,#fdc003);border-radius:9999px;"></div></div>
+          </div>
+          <div class="rounded-2xl p-4 glass cursor-pointer segment-card" onclick="showScreen('segment3')">
+            <div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 rounded-full flex items-center justify-center" style="background:rgba(255,115,74,.15);"><span class="material-symbols-outlined" style="font-size:15px;color:#ff734a;">psychology</span></div><span class="font-label text-xs" style="color:#aaa8c3;">CQ</span></div>
+            <div class="font-headline font-extrabold text-3xl" style="color:#ff734a;">64</div>
+            <p class="font-body text-xs mt-0.5" style="color:#74738b;">Cognitive Quotient</p>
+            <div class="mt-2 h-1 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div style="width:64%;height:100%;background:linear-gradient(90deg,#ff734a,#b02f00);border-radius:9999px;"></div></div>
+          </div>
+          <div class="rounded-2xl p-4 glass cursor-pointer segment-card" onclick="showScreen('segment4')">
+            <div class="flex items-center gap-2 mb-2"><div class="w-7 h-7 rounded-full flex items-center justify-center" style="background:rgba(255,110,132,.15);"><span class="material-symbols-outlined" style="font-size:15px;color:#ff6e84;">favorite</span></div><span class="font-label text-xs" style="color:#aaa8c3;">EQ</span></div>
+            <div class="font-headline font-extrabold text-3xl" style="color:#ff6e84;">81</div>
+            <p class="font-body text-xs mt-0.5" style="color:#74738b;">Emotional Quotient</p>
+            <div class="mt-2 h-1 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div style="width:81%;height:100%;background:linear-gradient(90deg,#ff6e84,#a70138);border-radius:9999px;"></div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5 Pillars -->
+      <div class="px-5 mt-4 mb-5">
+        <h3 class="font-headline font-bold text-sm mb-3" style="color:#e5e3ff;">The 5 Pillars of Pañcha Kalā</h3>
+        <div class="space-y-2.5">
+          <div class="segment-card rounded-2xl p-3.5 flex items-center gap-3" style="background:#17172f;border:1px solid rgba(129,236,255,.1);" onclick="showScreen('segment1')">
+            <div id="p1-av" style="width:38px;height:38px;flex-shrink:0;"></div>
+            <div class="flex-1 min-w-0"><h4 class="font-headline font-bold text-sm" style="color:#e5e3ff;">Discover Breath</h4><p class="font-body text-xs" style="color:#74738b;">Pratiṣṭhā · BQ · Hot Air Balloon</p></div>
+            <div class="text-right flex-shrink-0"><div class="font-label text-sm font-bold" style="color:#81ecff;">72</div><div style="width:44px;height:3px;background:rgba(70,70,92,.4);border-radius:2px;margin-top:3px;"><div style="width:72%;height:100%;background:#81ecff;border-radius:2px;"></div></div></div>
+          </div>
+          <div class="segment-card rounded-2xl p-3.5 flex items-center gap-3" style="background:#17172f;border:1px solid rgba(255,209,108,.1);" onclick="showScreen('segment2')">
+            <div id="p2-av" style="width:38px;height:38px;flex-shrink:0;"></div>
+            <div class="flex-1 min-w-0"><h4 class="font-headline font-bold text-sm" style="color:#e5e3ff;">Focus Training</h4><p class="font-body text-xs" style="color:#74738b;">Nivṛtti · FQ · Sushumna Balancer</p></div>
+            <div class="text-right flex-shrink-0"><div class="font-label text-sm font-bold" style="color:#ffd16c;">58</div><div style="width:44px;height:3px;background:rgba(70,70,92,.4);border-radius:2px;margin-top:3px;"><div style="width:58%;height:100%;background:#ffd16c;border-radius:2px;"></div></div></div>
+          </div>
+          <div class="segment-card rounded-2xl p-3.5 flex items-center gap-3" style="background:#17172f;border:1px solid rgba(255,115,74,.1);" onclick="showScreen('segment3')">
+            <div id="p3-av" style="width:38px;height:38px;flex-shrink:0;"></div>
+            <div class="flex-1 min-w-0"><h4 class="font-headline font-bold text-sm" style="color:#e5e3ff;">Brain Power</h4><p class="font-body text-xs" style="color:#74738b;">Vidyā · CQ · Sun Dragon & Moon Mage</p></div>
+            <div class="text-right flex-shrink-0"><div class="font-label text-sm font-bold" style="color:#ff734a;">64</div><div style="width:44px;height:3px;background:rgba(70,70,92,.4);border-radius:2px;margin-top:3px;"><div style="width:64%;height:100%;background:#ff734a;border-radius:2px;"></div></div></div>
+          </div>
+          <div class="segment-card rounded-2xl p-3.5 flex items-center gap-3" style="background:#17172f;border:1px solid rgba(255,110,132,.1);" onclick="showScreen('segment4')">
+            <div id="p4-av" style="width:38px;height:38px;flex-shrink:0;"></div>
+            <div class="flex-1 min-w-0"><h4 class="font-headline font-bold text-sm" style="color:#e5e3ff;">Breath Balance</h4><p class="font-body text-xs" style="color:#74738b;">Śānti · EQ · Beehive Resonator</p></div>
+            <div class="text-right flex-shrink-0"><div class="font-label text-sm font-bold" style="color:#ff6e84;">81</div><div style="width:44px;height:3px;background:rgba(70,70,92,.4);border-radius:2px;margin-top:3px;"><div style="width:81%;height:100%;background:#ff6e84;border-radius:2px;"></div></div></div>
+          </div>
+          <div class="segment-card rounded-2xl p-3.5 flex items-center gap-3" style="background:#17172f;border:1px solid rgba(255,209,108,.1);" onclick="showScreen('segment5')">
+            <div id="p5-av" style="width:38px;height:38px;flex-shrink:0;"></div>
+            <div class="flex-1 min-w-0"><h4 class="font-headline font-bold text-sm" style="color:#e5e3ff;">Wisdom & Creativity</h4><p class="font-body text-xs" style="color:#74738b;">Śāntyatīta · Fable Vault</p></div>
+            <div class="flex-shrink-0"><span class="font-label text-xs px-2 py-0.5 rounded-full" style="background:rgba(255,209,108,.15);color:#ffd16c;">NEW</span></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /home -->
+
+    <!-- ═══ SEGMENT 3 — BRAIN POWER (with Scanner) ═══ -->
+    <div id="screen-segment3" class="screen">
+      <div class="px-5 pt-5">
+        <div class="flex items-center gap-3 mb-4">
+          <button onclick="showScreen('home')" class="w-9 h-9 rounded-full flex items-center justify-center glass"><span class="material-symbols-outlined" style="font-size:20px;color:#aaa8c3;">arrow_back</span></button>
+          <div class="flex-1"><p class="font-label text-xs" style="color:#ff734a;letter-spacing:.1em;">SEGMENT 3 · VIDYĀ</p><h2 class="font-headline font-bold text-xl" style="color:#e5e3ff;">Brain Power</h2></div>
+          <div id="s3-av" style="width:44px;height:44px;cursor:pointer;" onclick="openAvModal()"></div>
+        </div>
+
+        <!-- Scan first CTA -->
+        <div class="rounded-2xl p-4 mb-4 cursor-pointer" style="background:linear-gradient(135deg,rgba(0,83,98,.2),rgba(12,12,31,.7));border:1.5px solid rgba(129,236,255,.25);" onclick="openScanner()">
+          <div class="flex items-center gap-3">
+            <div style="font-size:28px;">👃</div>
+            <div class="flex-1">
+              <p class="font-headline font-bold text-sm" style="color:#e5e3ff;">Scan Your Nāḍī First</p>
+              <p class="font-body text-xs mt-0.5" style="color:#74738b;">Detect whether you're in Sun Dragon or Moon Mage mode before you train.</p>
+            </div>
+            <div class="btn-gold px-3 py-1.5 rounded-full font-label text-xs font-bold">Scan</div>
+          </div>
+        </div>
+
+        <!-- Current active mode display -->
+        <div id="s3-mode-display" class="rounded-3xl p-4 mb-4 relative overflow-hidden" style="background:linear-gradient(135deg,rgba(255,115,74,.18),rgba(176,47,0,.1));border:1.5px solid rgba(255,115,74,.3);">
+          <div class="absolute top-0 right-0 w-20 h-20 rounded-full pointer-events-none" style="background:radial-gradient(circle,rgba(255,115,74,.15),transparent);transform:translate(30%,-30%);"></div>
+          <p class="font-label text-xs mb-1" style="color:#ff734a;letter-spacing:.1em;">CURRENTLY ACTIVE</p>
+          <div class="flex items-center gap-3">
+            <div style="font-size:36px;animation:floatY 3s ease-in-out infinite;" id="s3-mode-emoji">☀️</div>
+            <div>
+              <h3 class="font-headline font-bold text-lg" id="s3-mode-name" style="color:#ff734a;">Sun Dragon Mode</h3>
+              <p class="font-body text-xs mt-0.5" id="s3-mode-desc" style="color:#aaa8c3;">Piṅgalā dominant — Right nostril open — Logic & Maths</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Mode cards -->
+        <div class="grid grid-cols-2 gap-3 mb-4">
+          <div id="sun-card" class="rounded-3xl p-4 text-center cursor-pointer segment-card" style="background:linear-gradient(135deg,rgba(255,115,74,.2),rgba(176,47,0,.12));border:2px solid rgba(255,115,74,.5);" onclick="selectMode('sun')">
+            <div style="font-size:36px;margin-bottom:8px;animation:floatY 3s ease-in-out infinite;">🐉</div>
+            <h4 class="font-headline font-bold text-sm" style="color:#ff734a;">Sun Dragon</h4>
+            <p class="font-body text-xs mt-1" style="color:#74738b;">Piṅgalā · Right nostril</p>
+            <div class="mt-2 rounded-full px-3 py-1" style="background:rgba(255,115,74,.12);"><p class="font-label text-xs" style="color:#ff734a;">Maths & Logic</p></div>
+          </div>
+          <div id="moon-card" class="rounded-3xl p-4 text-center cursor-pointer segment-card" style="background:linear-gradient(135deg,rgba(129,236,255,.1),rgba(0,83,98,.15));border:1.5px solid rgba(129,236,255,.18);" onclick="selectMode('moon')">
+            <div style="font-size:36px;margin-bottom:8px;animation:floatY 3s ease-in-out infinite .5s;">🌙</div>
+            <h4 class="font-headline font-bold text-sm" style="color:#81ecff;">Moon Mage</h4>
+            <p class="font-body text-xs mt-1" style="color:#74738b;">Iḍā · Left nostril</p>
+            <div class="mt-2 rounded-full px-3 py-1" style="background:rgba(129,236,255,.1);"><p class="font-label text-xs" style="color:#81ecff;">Art & Creativity</p></div>
+          </div>
+        </div>
+
+        <!-- Energy hacks -->
+        <h3 class="font-headline font-bold text-sm mb-2" style="color:#e5e3ff;">⚡ Energy Hacks — Switch Your Mode</h3>
+        <p class="font-body text-xs mb-3" style="color:#74738b;">If your scan shows the wrong mode for your task, use these ancient Swara Yoga tricks:</p>
+        <div class="space-y-2.5 mb-4">
+          <div class="rounded-2xl p-3.5 glass flex items-center gap-3">
+            <span class="text-xl flex-shrink-0">🐻</span>
+            <div class="flex-1"><h4 class="font-headline font-semibold text-xs" style="color:#e5e3ff;">The Bear Hug</h4><p class="font-body text-xs mt-0.5" style="color:#74738b;">Squeeze the armpit on the ACTIVE side with a fist. In 5-10 min your other nostril opens.</p></div>
+            <button class="px-3 py-1 rounded-full font-label text-xs font-bold flex-shrink-0" style="background:rgba(255,115,74,.15);color:#ff734a;">Try</button>
+          </div>
+          <div class="rounded-2xl p-3.5 glass flex items-center gap-3">
+            <span class="text-xl flex-shrink-0">🐲</span>
+            <div class="flex-1"><h4 class="font-headline font-semibold text-xs" style="color:#e5e3ff;">The Sleeping Dragon</h4><p class="font-body text-xs mt-0.5" style="color:#74738b;">Lie on the same side as your ACTIVE nostril for 5-10 min — the opposite side opens.</p></div>
+            <button class="px-3 py-1 rounded-full font-label text-xs font-bold flex-shrink-0" style="background:rgba(129,236,255,.1);color:#81ecff;">Try</button>
+          </div>
+          <div class="rounded-2xl p-3.5 glass flex items-center gap-3">
+            <span class="text-xl flex-shrink-0">🤏</span>
+            <div class="flex-1"><h4 class="font-headline font-semibold text-xs" style="color:#e5e3ff;">Manual Block</h4><p class="font-body text-xs mt-0.5" style="color:#74738b;">Plug the ACTIVE nostril with a finger. Forces breath through the desired side immediately.</p></div>
+            <button class="px-3 py-1 rounded-full font-label text-xs font-bold flex-shrink-0" style="background:rgba(255,209,108,.1);color:#ffd16c;">Try</button>
+          </div>
+        </div>
+
+        <div class="rounded-2xl p-4 mb-5" style="background:#17172f;"><p class="font-label text-xs mb-1" style="color:#aaa8c3;letter-spacing:.1em;">COGNITIVE QUOTIENT</p><div class="flex items-end gap-3"><span class="font-headline font-extrabold text-4xl" style="color:#ff734a;">64</span><span class="font-label text-xs pb-1.5" style="color:#ff734a;">↑ +8 this week</span></div><div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div class="h-full rounded-full" style="width:64%;background:linear-gradient(90deg,#ff734a,#b02f00);"></div></div></div>
+      </div>
+    </div>
+
+    <!-- Other segments kept concise -->
+    <div id="screen-segment1" class="screen">
+      <div class="px-5 pt-5">
+        <div class="flex items-center gap-3 mb-4"><button onclick="showScreen('home')" class="w-9 h-9 rounded-full flex items-center justify-center glass"><span class="material-symbols-outlined" style="font-size:20px;color:#aaa8c3;">arrow_back</span></button><div><p class="font-label text-xs" style="color:#81ecff;letter-spacing:.1em;">SEGMENT 1 · PRATIṢṬHĀ</p><h2 class="font-headline font-bold text-xl" style="color:#e5e3ff;">Discover Breath</h2></div><div id="s1-av" style="width:44px;height:44px;margin-left:auto;cursor:pointer;" onclick="openAvModal()"></div></div>
+        <div class="rounded-3xl p-5 mb-4 text-center relative overflow-hidden" style="background:linear-gradient(160deg,#0d1e1a,#111127);">
+          <div class="relative flex items-center justify-center" style="height:170px;">
+            <div class="absolute w-24 h-24 rounded-full" style="border:1px solid rgba(129,236,255,.2);animation:waveExpand 3s ease-out infinite;"></div>
+            <div class="absolute w-24 h-24 rounded-full" style="border:1px solid rgba(129,236,255,.15);animation:waveExpand 3s ease-out 1s infinite;"></div>
+            <div id="breath-orb" style="width:120px;height:120px;border-radius:50%;border:1.5px solid rgba(129,236,255,.3);display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,rgba(129,236,255,.1),rgba(0,212,236,.03));animation:breathPulse 4s ease-in-out infinite;">
+              <div class="text-center"><span class="material-symbols-outlined" style="font-size:32px;color:#81ecff;font-variation-settings:'FILL' 1;">air</span><p id="breath-instruction" class="font-headline font-bold text-xs mt-1" style="color:#81ecff;">INHALE</p><p id="breath-count" class="font-label text-2xl font-bold" style="color:#e5e3ff;">4</p></div>
+            </div>
+          </div>
+        </div>
+        <div class="rounded-3xl p-4 mb-4" style="background:#111127;">
+          <p class="font-label text-xs mb-2" style="color:#ffd16c;letter-spacing:.1em;">🎈 VIRTUAL HOT AIR BALLOON</p>
+          <div class="relative rounded-2xl overflow-hidden" style="height:160px;background:linear-gradient(to bottom,#070714,#0e0e22);">
+            <div id="balloon" style="position:absolute;left:18%;top:38%;transition:top .5s ease;animation:balloonBob 3s ease-in-out infinite;">
+              <div style="width:32px;height:40px;border-radius:50% 50% 40% 40%;background:linear-gradient(135deg,#ff734a,#ffd16c);"></div>
+              <div style="width:2px;height:8px;background:#74738b;margin:0 auto;"></div>
+              <div style="width:16px;height:8px;background:rgba(253,192,3,.55);border-radius:4px;margin:0 auto;"></div>
+            </div>
+          </div>
+          <div class="flex items-center justify-between mt-3"><div><p class="font-label text-xs" style="color:#74738b;">Breath Power</p><div class="w-28 h-1.5 rounded-full mt-1 overflow-hidden" style="background:rgba(70,70,92,.4);"><div id="breath-level-bar" class="h-full rounded-full" style="width:0%;background:linear-gradient(90deg,#81ecff,#ffd16c);transition:width .2s;"></div></div></div><button id="breathe-btn" class="btn-gold px-4 py-2 rounded-full text-xs font-bold flex items-center gap-1.5" onclick="startBreathing()"><span class="material-symbols-outlined" style="font-size:14px;">mic</span>Start</button></div>
+        </div>
+        <div class="rounded-2xl p-4 mb-5 glass"><div class="flex items-center gap-2 mb-2"><span class="material-symbols-outlined" style="font-size:15px;color:#ffd16c;">science</span><span class="font-headline font-semibold text-sm" style="color:#e5e3ff;">Vedic Science</span></div><p class="font-body text-xs leading-relaxed" style="color:#aaa8c3;">In the <em>Rigveda</em>, Prāṇa is described as the life force powering the autonomic nervous system. Conscious exhalation activates the <strong style="color:#81ecff;">parasympathetic nervous system</strong>.</p></div>
+      </div>
+    </div>
+
+    <div id="screen-segment2" class="screen">
+      <div class="px-5 pt-5">
+        <div class="flex items-center gap-3 mb-4"><button onclick="showScreen('home')" class="w-9 h-9 rounded-full flex items-center justify-center glass"><span class="material-symbols-outlined" style="font-size:20px;color:#aaa8c3;">arrow_back</span></button><div><p class="font-label text-xs" style="color:#ffd16c;letter-spacing:.1em;">SEGMENT 2 · NIVṚTTI</p><h2 class="font-headline font-bold text-xl" style="color:#e5e3ff;">Focus Training</h2></div><div id="s2-av" style="width:44px;height:44px;margin-left:auto;cursor:pointer;" onclick="openAvModal()"></div></div>
+        <div class="rounded-3xl p-5 mb-4 text-center" style="background:linear-gradient(160deg,#0a1220,#111127);">
+          <p class="font-label text-xs mb-3" style="color:#ffd16c;letter-spacing:.1em;">⚖️ SUSHUMNA BALANCER</p>
+          <div class="relative" style="height:130px;"><div class="absolute" style="left:8%;right:8%;top:50%;height:2px;background:linear-gradient(90deg,transparent,rgba(255,209,108,.5),rgba(255,209,108,.5),transparent);transform:translateY(-50%);"></div><div style="position:absolute;left:10%;right:10%;top:50%;transform:translateY(-50%);height:0;overflow:visible;"><div id="balance-indicator" style="position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:40px;height:40px;border-radius:50%;background:radial-gradient(circle,#81ecff,#00d4ec);box-shadow:0 0 16px rgba(129,236,255,.55);display:flex;align-items:center;justify-content:center;font-size:18px;transition:left .4s ease;">🧘</div></div><div class="absolute" style="left:6%;top:20%;height:60%;width:3px;background:rgba(255,115,74,.5);border-radius:2px;"><p style="position:absolute;bottom:-18px;left:-3px;font-family:'Space Grotesk';font-size:10px;color:#ff734a;">☀</p></div><div class="absolute" style="right:6%;top:20%;height:60%;width:3px;background:rgba(129,236,255,.5);border-radius:2px;"><p style="position:absolute;bottom:-18px;right:-3px;font-family:'Space Grotesk';font-size:10px;color:#81ecff;">☽</p></div></div>
+          <button class="mt-4 btn-gold px-5 py-2 rounded-full text-xs font-bold" onclick="startBalancer()">Begin Balancing</button>
+        </div>
+        <div class="rounded-2xl p-4 mb-5" style="background:#17172f;"><p class="font-label text-xs mb-1" style="color:#aaa8c3;letter-spacing:.1em;">FOCUS QUOTIENT</p><div class="flex items-end gap-3"><span class="font-headline font-extrabold text-4xl" style="color:#ffd16c;">58</span><span class="font-label text-xs pb-1" style="color:#00d4ec;">↑ +4 this week</span></div><div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div class="h-full rounded-full" style="width:58%;background:linear-gradient(90deg,#ffd16c,#fdc003);"></div></div></div>
+      </div>
+    </div>
+
+    <div id="screen-segment4" class="screen">
+      <div class="px-5 pt-5">
+        <div class="flex items-center gap-3 mb-4"><button onclick="showScreen('home')" class="w-9 h-9 rounded-full flex items-center justify-center glass"><span class="material-symbols-outlined" style="font-size:20px;color:#aaa8c3;">arrow_back</span></button><div><p class="font-label text-xs" style="color:#ff6e84;letter-spacing:.1em;">SEGMENT 4 · ŚĀNTI</p><h2 class="font-headline font-bold text-xl" style="color:#e5e3ff;">Breath Balance</h2></div><div id="s4-av" style="width:44px;height:44px;margin-left:auto;cursor:pointer;" onclick="openAvModal()"></div></div>
+        <div class="rounded-3xl p-5 mb-4 text-center" style="background:linear-gradient(160deg,#0d1020,#111127);">
+          <p class="font-label text-xs mb-3" style="color:#ffd16c;letter-spacing:.1em;">🐝 BEEHIVE RESONATOR — BHRAMARI</p>
+          <div class="relative flex items-center justify-center" style="height:130px;">
+            <div id="bee-orb" style="width:60px;height:60px;border-radius:50%;background:radial-gradient(circle,rgba(255,209,108,.28),rgba(255,115,74,.18));display:flex;align-items:center;justify-content:center;animation:floatY 3s ease-in-out infinite;font-size:28px;box-shadow:0 0 20px rgba(255,209,108,.25);">🐝</div>
+          </div>
+          <div class="h-2 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div id="hum-bar" class="h-full rounded-full" style="width:0%;background:linear-gradient(90deg,#ffd16c,#ff734a);transition:width .1s;"></div></div>
+          <button class="mt-3 btn-gold px-5 py-2 rounded-full text-xs font-bold" onclick="startBhramari()">🎵 Start Humming</button>
+        </div>
+        <div class="rounded-3xl p-4 mb-4" style="background:#17172f;">
+          <p class="font-label text-xs mb-3" style="color:#81ecff;letter-spacing:.1em;">🔮 TATTWA ALCHEMIST</p>
+          <div class="grid grid-cols-5 gap-2">
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer" onclick="selectTattwa('earth')"><div class="w-9 h-9 tw-earth" style="background:#ffd16c;transition:transform .2s;"></div><p class="font-label" style="font-size:9px;color:#74738b;">Earth</p></div>
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer" onclick="selectTattwa('water')"><div class="w-9 h-9 tw-water" style="background:#81ecff;transition:transform .2s;"></div><p class="font-label" style="font-size:9px;color:#74738b;">Water</p></div>
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer" onclick="selectTattwa('fire')"><div class="w-9 h-9 tw-fire" style="background:#ff734a;transition:transform .2s;"></div><p class="font-label" style="font-size:9px;color:#74738b;">Fire</p></div>
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer" onclick="selectTattwa('air')"><div class="w-9 h-9 tw-air" style="background:#e5e3ff;transition:transform .2s;"></div><p class="font-label" style="font-size:9px;color:#74738b;">Air</p></div>
+            <div class="flex flex-col items-center gap-1.5 cursor-pointer" onclick="selectTattwa('space')"><div class="w-9 h-9 tw-space" style="background:rgba(70,70,92,.8);border:1px solid rgba(129,236,255,.3);transition:transform .2s;"></div><p class="font-label" style="font-size:9px;color:#74738b;">Space</p></div>
+          </div>
+          <div id="tattwa-result" class="mt-3 p-3 rounded-xl hidden"><p id="tattwa-text" class="font-body text-xs" style="color:#aaa8c3;"></p></div>
+        </div>
+        <div class="rounded-2xl p-4 mb-5" style="background:#17172f;"><p class="font-label text-xs mb-1" style="color:#aaa8c3;letter-spacing:.1em;">EMOTIONAL QUOTIENT</p><div class="flex items-end gap-3"><span class="font-headline font-extrabold text-4xl" style="color:#ff6e84;">81</span><span class="font-label text-xs pb-1" style="color:#ff6e84;">↑ +2 this week</span></div><div class="mt-2 h-1.5 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div class="h-full rounded-full" style="width:81%;background:linear-gradient(90deg,#ff6e84,#a70138);"></div></div></div>
+      </div>
+    </div>
+
+    <div id="screen-segment5" class="screen">
+      <div class="px-5 pt-5">
+        <div class="flex items-center gap-3 mb-4"><button onclick="showScreen('home')" class="w-9 h-9 rounded-full flex items-center justify-center glass"><span class="material-symbols-outlined" style="font-size:20px;color:#aaa8c3;">arrow_back</span></button><div><p class="font-label text-xs" style="color:#ffd16c;letter-spacing:.1em;">SEGMENT 5 · ŚĀNTYATĪTA</p><h2 class="font-headline font-bold text-xl" style="color:#e5e3ff;">Wisdom & Creativity</h2></div><div id="s5-av" style="width:44px;height:44px;margin-left:auto;cursor:pointer;" onclick="openAvModal()"></div></div>
+        <div class="rounded-3xl p-4 mb-4 relative overflow-hidden" style="background:linear-gradient(135deg,rgba(255,209,108,.07),rgba(253,192,3,.03));border:1px solid rgba(255,209,108,.14);"><p class="font-label text-xs" style="color:#ffd16c;letter-spacing:.1em;">📚 THE FABLE VAULT</p><h3 class="font-headline font-bold text-lg mt-1" style="color:#e5e3ff;">Panchatantra Stories</h3><p class="font-body text-xs mt-2" style="color:#aaa8c3;">Complete a 10-min breath session to unlock each fable.</p><div class="mt-3 flex items-center gap-2"><div class="h-1.5 flex-1 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div class="h-full rounded-full" style="width:40%;background:linear-gradient(90deg,#ffd16c,#fdc003);"></div></div><span class="font-label text-xs" style="color:#ffd16c;">2/5 Unlocked</span></div></div>
+        <div class="space-y-3 mb-5">
+          <div class="rounded-2xl p-4 cursor-pointer segment-card" style="background:#17172f;border:1px solid rgba(255,209,108,.18);"><div class="flex items-start gap-3"><div style="font-size:28px;animation:floatY 3s ease-in-out infinite;">🦁</div><div><span class="font-label text-xs px-2 py-0.5 rounded-full" style="background:rgba(255,209,108,.15);color:#ffd16c;">UNLOCKED</span><h4 class="font-headline font-bold text-sm mt-1" style="color:#e5e3ff;">The Hare & The Lion</h4><p class="font-body text-xs mt-0.5" style="color:#74738b;">"What cannot be achieved by force, can be achieved through wisdom."</p></div></div></div>
+          <div class="rounded-2xl p-4 opacity-55" style="background:#17172f;"><div class="flex items-start gap-3"><div class="w-10 h-10 rounded-xl flex-shrink-0 flex items-center justify-center" style="background:rgba(70,70,92,.28);"><span class="material-symbols-outlined" style="color:#46465c;font-size:18px;">lock</span></div><div><span class="font-label text-xs px-2 py-0.5 rounded-full" style="background:rgba(70,70,92,.3);color:#74738b;">LOCKED</span><h4 class="font-headline font-bold text-sm mt-1" style="color:#74738b;">The Monkey & The Crocodile</h4><p class="font-body text-xs mt-0.5" style="color:#46465c;">Complete Day 8 session to unlock</p></div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div id="screen-mandala" class="screen">
+      <div class="px-5 pt-5">
+        <div class="flex items-center gap-3 mb-4"><button onclick="showScreen('home')" class="w-9 h-9 rounded-full flex items-center justify-center glass"><span class="material-symbols-outlined" style="font-size:20px;color:#aaa8c3;">arrow_back</span></button><h2 class="font-headline font-bold text-xl" style="color:#e5e3ff;">Mandala Progress Hub</h2></div>
+        <div class="flex flex-col items-center mb-5"><div id="mandala-av" style="width:160px;height:200px;cursor:pointer;" onclick="openAvModal()"></div><p class="font-label text-xs mt-1" style="color:#aaa8c3;letter-spacing:.12em;">TAP TO EVOLVE</p></div>
+        <div class="flex justify-center mb-4"><div class="relative flex items-center justify-center" style="width:200px;height:200px;"><svg width="200" height="200" viewBox="0 0 200 200"><circle cx="100" cy="100" r="88" fill="none" stroke="rgba(129,236,255,.07)" stroke-width="9"/><circle cx="100" cy="100" r="88" fill="none" stroke="#81ecff" stroke-width="9" stroke-dasharray="553" stroke-dashoffset="153" class="pring-el" stroke-linecap="round" opacity=".8"/><circle cx="100" cy="100" r="72" fill="none" stroke="rgba(255,209,108,.07)" stroke-width="7"/><circle cx="100" cy="100" r="72" fill="none" stroke="#ffd16c" stroke-width="7" stroke-dasharray="452" stroke-dashoffset="191" class="pring-el" stroke-linecap="round" opacity=".8"/><circle cx="100" cy="100" r="57" fill="none" stroke="rgba(255,115,74,.07)" stroke-width="6"/><circle cx="100" cy="100" r="57" fill="none" stroke="#ff734a" stroke-width="6" stroke-dasharray="358" stroke-dashoffset="129" class="pring-el" stroke-linecap="round" opacity=".8"/><circle cx="100" cy="100" r="43" fill="none" stroke="rgba(255,110,132,.07)" stroke-width="6"/><circle cx="100" cy="100" r="43" fill="none" stroke="#ff6e84" stroke-width="6" stroke-dasharray="270" stroke-dashoffset="51" class="pring-el" stroke-linecap="round" opacity=".8"/></svg><div class="absolute text-center"><p class="font-label text-xs" style="color:#74738b;">AVG</p><p class="font-headline font-extrabold text-3xl" style="color:#ffd16c;">68.75</p></div></div></div>
+        <div class="grid grid-cols-2 gap-2 mb-5"><div class="flex items-center gap-2 glass rounded-xl p-2.5"><div style="width:8px;height:8px;border-radius:50%;background:#81ecff;box-shadow:0 0 7px rgba(129,236,255,.5);"></div><span class="font-label text-xs" style="color:#aaa8c3;">BQ: 72</span></div><div class="flex items-center gap-2 glass rounded-xl p-2.5"><div style="width:8px;height:8px;border-radius:50%;background:#ffd16c;box-shadow:0 0 7px rgba(255,209,108,.5);"></div><span class="font-label text-xs" style="color:#aaa8c3;">FQ: 58</span></div><div class="flex items-center gap-2 glass rounded-xl p-2.5"><div style="width:8px;height:8px;border-radius:50%;background:#ff734a;box-shadow:0 0 7px rgba(255,115,74,.5);"></div><span class="font-label text-xs" style="color:#aaa8c3;">CQ: 64</span></div><div class="flex items-center gap-2 glass rounded-xl p-2.5"><div style="width:8px;height:8px;border-radius:50%;background:#ff6e84;box-shadow:0 0 7px rgba(255,110,132,.5);"></div><span class="font-label text-xs" style="color:#aaa8c3;">EQ: 81</span></div></div>
+      </div>
+    </div>
+
+    <div id="screen-profile" class="screen">
+      <div class="px-5 pt-5">
+        <div class="flex items-center gap-3 mb-4"><button onclick="showScreen('home')" class="w-9 h-9 rounded-full flex items-center justify-center glass"><span class="material-symbols-outlined" style="font-size:20px;color:#aaa8c3;">arrow_back</span></button><h2 class="font-headline font-bold text-xl" style="color:#e5e3ff;">Your Profile</h2></div>
+        <div class="text-center mb-4">
+          <div id="prof-av-big" style="width:140px;height:175px;margin:0 auto 10px;cursor:pointer;" onclick="openAvModal()"></div>
+          <h3 class="font-headline font-bold text-xl" style="color:#e5e3ff;">Arjun</h3>
+          <p class="font-body text-sm" style="color:#74738b;">Age 12 · Level 2 · Focus Apprentice</p>
+          <div class="flex items-center justify-center gap-2 mt-2"><span class="font-label text-xs px-3 py-1.5 rounded-full" style="background:rgba(255,209,108,.14);color:#ffd16c;">⚡ 1,240 XP</span><span class="font-label text-xs px-3 py-1.5 rounded-full" style="background:rgba(255,115,74,.14);color:#ff734a;">🔥 7 Day Streak</span></div>
+          <button onclick="openAvModal()" class="mt-3 btn-gold px-5 py-2 rounded-full text-xs font-bold inline-flex items-center gap-1.5"><span class="material-symbols-outlined" style="font-size:14px;">auto_awesome</span>View Avatar Evolution</button>
+        </div>
+        <div class="rounded-2xl p-3.5 mb-3 glass"><div class="flex items-center justify-between mb-1.5"><span class="font-label text-xs" style="color:#aaa8c3;">Level 2 → Level 3 (Brain Warrior)</span><span class="font-label text-xs" style="color:#ffd16c;">1240/1500 XP</span></div><div class="h-1.5 rounded-full overflow-hidden" style="background:rgba(70,70,92,.4);"><div class="h-full rounded-full xp-bar-grad" style="width:82%;"></div></div><p class="font-body text-xs mt-1.5" style="color:#74738b;">+260 XP to unlock 🐉 Brain Warrior form!</p></div>
+        <!-- Profile evolution strip -->
+        <div class="rounded-2xl p-3.5 mb-3 glass"><p class="font-label text-xs mb-3" style="color:#aaa8c3;letter-spacing:.1em;">AVATAR EVOLUTION PATH</p><div id="prof-ev-strip" class="flex items-center gap-2 overflow-x-auto pb-1" style="scrollbar-width:none;"></div></div>
+        <div class="grid grid-cols-2 gap-2.5 mb-5"><div class="rounded-2xl p-3.5 glass text-center"><div class="font-headline font-bold text-2xl" style="color:#ffd16c;">23</div><p class="font-body text-xs mt-0.5" style="color:#74738b;">Sessions</p></div><div class="rounded-2xl p-3.5 glass text-center"><div class="font-headline font-bold text-2xl" style="color:#81ecff;">230<span class="text-base">m</span></div><p class="font-body text-xs mt-0.5" style="color:#74738b;">Breath Time</p></div><div class="rounded-2xl p-3.5 glass text-center"><div class="font-headline font-bold text-2xl" style="color:#ff734a;">3</div><p class="font-body text-xs mt-0.5" style="color:#74738b;">Badges</p></div><div class="rounded-2xl p-3.5 glass text-center"><div class="font-headline font-bold text-2xl" style="color:#ff6e84;">2</div><p class="font-body text-xs mt-0.5" style="color:#74738b;">Fables</p></div></div>
+      </div>
+    </div>
+
+  </div><!-- /scroll-area -->
+
+  <!-- BOTTOM NAV -->
+  <nav class="fixed bottom-0 left-0 right-0 z-40 bottom-nav" style="max-width:430px;margin:0 auto;">
+    <div class="flex items-center justify-around py-1.5 px-3">
+      <button class="nav-btn nav-active flex flex-col items-center gap-0.5 py-2 px-3" onclick="showScreen('home');setNav(this)"><span class="material-symbols-outlined nav-ico" style="font-size:22px;color:#ffd16c;">home</span><span class="nav-lbl font-label text-xs" style="color:#ffd16c;">Home</span></button>
+      <button class="nav-btn flex flex-col items-center gap-0.5 py-2 px-3" onclick="openScanner();setNav(this)"><span class="material-symbols-outlined nav-ico" style="font-size:22px;color:#aaa8c3;">biotech</span><span class="nav-lbl font-label text-xs" style="color:#74738b;">Scanner</span></button>
+      <button class="flex flex-col items-center gap-0.5" onclick="showScreen('mandala');setNav(this)">
+        <div style="width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,#ffd16c,#fdc003);margin-top:-16px;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(255,209,108,.38);"><span class="material-symbols-outlined" style="font-size:24px;color:#3d2b00;font-variation-settings:'FILL' 1;">auto_awesome</span></div>
+        <span class="font-label text-xs" style="color:#74738b;">Mandala</span>
+      </button>
+      <button class="nav-btn flex flex-col items-center gap-0.5 py-2 px-3" onclick="showScreen('segment5');setNav(this)"><span class="material-symbols-outlined nav-ico" style="font-size:22px;color:#aaa8c3;">menu_book</span><span class="nav-lbl font-label text-xs" style="color:#74738b;">Fables</span></button>
+      <button class="nav-btn flex flex-col items-center gap-0.5 py-2 px-3" onclick="showScreen('profile');setNav(this)"><span class="material-symbols-outlined nav-ico" style="font-size:22px;color:#aaa8c3;">person</span><span class="nav-lbl font-label text-xs" style="color:#74738b;">Profile</span></button>
+    </div>
+  </nav>
+</div>
+
+<script>
+// ═══════════════════════════════════════
+// AVATAR CHARACTER SYSTEM
+// ═══════════════════════════════════════
+const SKIN='#c68642', SKIN_D='#a0672e', HAIR_B='#1a0800', HAIR_G='#2a1000';
+
+const STAGES=[
+  {id:0,name:'Breath Seeker',sanskrit:'Pratiṣṭhā',ac:'#81ecff',emoji:'🌬️',
+   desc:'Just awakening to breath. Soft, curious, full of potential. A single calm teal aura surrounds the body.',
+   traits:[['Air','rgba(129,236,255,.18)','#81ecff'],['Curious','rgba(255,209,108,.12)','#ffd16c']],
+   glows:['Soft teal body aura','Calm single ring','Particle wisps'],
+   glowC:['#81ecff','#00d4ec','#81ecff'],prog:72,next:'Focus Apprentice',nextXp:500},
+  {id:1,name:'Focus Apprentice',sanskrit:'Nivṛtti',ac:'#ffd16c',emoji:'🎯',
+   desc:'Dual nāḍīs awaken. Gold Piṅgalā on the right, cool Iḍā on the left. Two counter-rotating halos represent both hemispheres.',
+   traits:[['Balanced','rgba(255,209,108,.18)','#ffd16c'],['Dual Energy','rgba(255,115,74,.12)','#ff734a']],
+   glows:['Gold + teal dual halo','Sun & Moon orbs orbit','Crown glow activated'],
+   glowC:['#ffd16c','#81ecff','#ffd16c'],prog:58,next:'Brain Warrior',nextXp:260},
+  {id:2,name:'Brain Warrior',sanskrit:'Vidyā',ac:'#ff734a',emoji:'🐉',
+   desc:'Fire and intellect fuse. Dragon-fire surrounds the body. A fierce flame corona blazes with solar energy.',
+   traits:[['Fire','rgba(255,115,74,.18)','#ff734a'],['Analytical','rgba(255,209,108,.12)','#ffd16c']],
+   glows:['Flame corona','Dragon-fire arm traces','Spike polygon aura'],
+   glowC:['#ff734a','#ff734a','#ffd16c'],prog:64,next:'Emotion Sage',nextXp:480},
+  {id:3,name:'Emotion Sage',sanskrit:'Śānti',ac:'#c77dff',emoji:'🧘',
+   desc:'Bhramari mastered. Violet — the Third Eye chakra. Four chakra orbs orbit in all directions.',
+   traits:[['Resonant','rgba(199,125,255,.18)','#c77dff'],['Still Mind','rgba(129,236,255,.12)','#81ecff']],
+   glows:['Violet crown ray','4-chakra orb ring','Triple ring aura'],
+   glowC:['#c77dff','#81ecff','#ffd16c'],prog:81,next:'Wisdom Keeper',nextXp:740},
+  {id:4,name:'Wisdom Keeper',sanskrit:'Śāntyatīta',ac:'#fdc003',emoji:'⭐',
+   desc:'The pinnacle. All four quotients unified. A full golden mandala unfolds with 8 orbiting animal familiars.',
+   traits:[['Cosmic','rgba(253,192,3,.2)','#fdc003'],['All Elements','rgba(255,115,74,.12)','#ff734a']],
+   glows:['Full golden mandala','8 orbiting familiars','Rainbow body radiance'],
+   glowC:['#fdc003','#ff734a','#c77dff'],prog:40,next:null,nextXp:0},
+];
+
+let curStage=1, avGender='boy', modalStage=1;
+let micInterval=null, balancerIv=null, breathIv=null, humIv=null;
+let scSelectedMethod=null, scSelectedNostril=null, scConfidence=50;
+let activeNadi='pingala'; // tracks result from scanner
+
+// ── Draw full character SVG ──
+function charSVG(gender,stage,w,h){
+  const s=STAGES[stage];
+  const ac=s.ac;
+  const cx=w/2, cy=h*0.48;
+  const scale=w/200;
+  const sk=SKIN, skd=SKIN_D;
+  const hc=gender==='boy'?HAIR_B:HAIR_G;
+
+  // Aura per stage
+  function aura(){
+    if(stage===0) return `<ellipse cx="${cx}" cy="${cy}" rx="${52*scale}" ry="${60*scale}" fill="${ac}" fill-opacity=".06" style="animation:breathPulse 3s ease-in-out infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy}" r="${74*scale}" fill="none" stroke="${ac}" stroke-width="${scale}" stroke-opacity=".22" stroke-dasharray="${6*scale} ${5*scale}" style="animation:spinCW 20s linear infinite;transform-origin:${cx}px ${cy}px;"/>`;
+    if(stage===1) return `<ellipse cx="${cx}" cy="${cy}" rx="${54*scale}" ry="${62*scale}" fill="#ffd16c" fill-opacity=".07" style="animation:breathPulse 3s ease-in-out infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy}" r="${76*scale}" fill="none" stroke="#ffd16c" stroke-width="${1.3*scale}" stroke-opacity=".35" stroke-dasharray="${8*scale} ${4*scale}" style="animation:spinCW 14s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy}" r="${86*scale}" fill="none" stroke="#81ecff" stroke-width="${scale}" stroke-opacity=".25" stroke-dasharray="${5*scale} ${5*scale}" style="animation:spinCCW 18s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy*0.18}" r="${6*scale}" fill="#ffd16c" fill-opacity=".65" style="animation:spinCW 14s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx*1.82}" cy="${cy}" r="${5*scale}" fill="#81ecff" fill-opacity=".55" style="animation:spinCCW 18s linear infinite;transform-origin:${cx}px ${cy}px;"/>`;
+    if(stage===2){const pts=Array.from({length:12},(_,i)=>{const a=i*Math.PI/6,r=i%2?82*scale:68*scale;return`${cx+r*Math.cos(a-Math.PI/2)},${cy+r*Math.sin(a-Math.PI/2)}`;}).join(' ');return`<ellipse cx="${cx}" cy="${cy}" rx="${56*scale}" ry="${64*scale}" fill="#ff734a" fill-opacity=".1" style="animation:breathPulse 3s ease-in-out infinite;transform-origin:${cx}px ${cy}px;"/><polygon points="${pts}" fill="none" stroke="#ff734a" stroke-width="${scale}" stroke-opacity=".28" style="animation:spinCW 18s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy}" r="${78*scale}" fill="none" stroke="#ffd16c" stroke-width="${1.2*scale}" stroke-opacity=".32" stroke-dasharray="${9*scale} ${3*scale}" style="animation:spinCCW 13s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy*0.16}" r="${5*scale}" fill="#ff734a" fill-opacity=".7" style="animation:spinCW 10s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx*1.84}" cy="${cy}" r="${4*scale}" fill="#ffd16c" fill-opacity=".55" style="animation:spinCCW 13s linear infinite;transform-origin:${cx}px ${cy}px;"/>`;}
+    if(stage===3) return `<ellipse cx="${cx}" cy="${cy}" rx="${58*scale}" ry="${66*scale}" fill="#c77dff" fill-opacity=".1" style="animation:breathPulse 3s ease-in-out infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy}" r="${78*scale}" fill="none" stroke="#c77dff" stroke-width="${1.3*scale}" stroke-opacity=".38" stroke-dasharray="${7*scale} ${4*scale}" style="animation:spinCW 14s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy}" r="${88*scale}" fill="none" stroke="#81ecff" stroke-width="${scale}" stroke-opacity=".25" stroke-dasharray="${4*scale} ${5*scale}" style="animation:spinCCW 18s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy}" r="${98*scale}" fill="none" stroke="#ffd16c" stroke-width="${.7*scale}" stroke-opacity=".18" style="animation:spinCW 22s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${(cy-80*scale)}" r="${6*scale}" fill="#c77dff" fill-opacity=".7" style="animation:spinCW 14s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx+80*scale}" cy="${cy}" r="${5*scale}" fill="#81ecff" fill-opacity=".6" style="animation:spinCCW 18s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy+80*scale}" r="${5*scale}" fill="#ffd16c" fill-opacity=".55" style="animation:spinCW 14s linear infinite;transform-origin:${cx}px ${cy}px;animation-delay:-5s;"/><circle cx="${cx-80*scale}" cy="${cy}" r="${4.5*scale}" fill="#ff6e84" fill-opacity=".5" style="animation:spinCCW 18s linear infinite;transform-origin:${cx}px ${cy}px;animation-delay:-8s;"/>`;
+    if(stage===4){const cols=['#fdc003','#81ecff','#ff734a','#c77dff'];let petals='',orbs='';for(let i=0;i<8;i++){petals+=`<ellipse cx="${cx}" cy="${cy-90*scale}" rx="${6*scale}" ry="${15*scale}" fill="${cols[i%4]}" fill-opacity=".18" transform="rotate(${i*45} ${cx} ${cy})" style="animation:spinCW 20s linear infinite;transform-origin:${cx}px ${cy}px;"/>`;const a=i*Math.PI/4,r=90*scale;orbs+=`<circle cx="${(cx+r*Math.cos(a-Math.PI/2)).toFixed(1)}" cy="${(cy+r*Math.sin(a-Math.PI/2)).toFixed(1)}" r="${(i<4?6:4)*scale}" fill="${cols[i%4]}" fill-opacity="${i<4?.72:.48}" style="animation:${i%2?'spinCW':'spinCCW'} ${10+i*1.5}s linear infinite;transform-origin:${cx}px ${cy}px;animation-delay:-${i*1.2}s;"/>`;}return`<ellipse cx="${cx}" cy="${cy}" rx="${60*scale}" ry="${68*scale}" fill="#fdc003" fill-opacity=".1" style="animation:breathPulse 3s ease-in-out infinite;transform-origin:${cx}px ${cy}px;"/>${petals}<circle cx="${cx}" cy="${cy}" r="${78*scale}" fill="none" stroke="#81ecff" stroke-width="${1.1*scale}" stroke-opacity=".4" stroke-dasharray="${6*scale} ${3*scale}" style="animation:spinCW 12s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy}" r="${88*scale}" fill="none" stroke="#ffd16c" stroke-width="${1.2*scale}" stroke-opacity=".42" stroke-dasharray="${9*scale} ${3*scale}" style="animation:spinCCW 10s linear infinite;transform-origin:${cx}px ${cy}px;"/><circle cx="${cx}" cy="${cy}" r="${98*scale}" fill="none" stroke="#ff734a" stroke-width="${scale}" stroke-opacity=".3" stroke-dasharray="${5*scale} ${4*scale}" style="animation:spinCW 14s linear infinite;transform-origin:${cx}px ${cy}px;"/>${orbs}`;}
+    return '';
+  }
+
+  // Hair
+  function hair(){
+    const s2=scale;
+    if(gender==='boy'){
+      if(stage===0) return `<path d="M${cx-26*s2},${cy-64*s2} Q${cx},${cy-82*s2} ${cx+26*s2},${cy-64*s2} Q${cx+22*s2},${cy-78*s2} ${cx},${cy-82*s2} Q${cx-22*s2},${cy-78*s2} ${cx-26*s2},${cy-64*s2}Z" fill="${hc}"/>`;
+      if(stage===1) return `<path d="M${cx-26*s2},${cy-65*s2} Q${cx},${cy-80*s2} ${cx+26*s2},${cy-65*s2} Q${cx+20*s2},${cy-80*s2} ${cx},${cy-84*s2} Q${cx-20*s2},${cy-80*s2} ${cx-26*s2},${cy-65*s2}Z" fill="${hc}"/><path d="M${cx},${cy-80*s2} L${cx-3*s2},${cy-96*s2} L${cx},${cy-88*s2} L${cx+3*s2},${cy-96*s2}Z" fill="${hc}"/>`;
+      if(stage===2) return `<path d="M${cx-26*s2},${cy-68*s2} Q${cx},${cy-82*s2} ${cx+26*s2},${cy-68*s2} Q${cx+18*s2},${cy-84*s2} ${cx},${cy-86*s2} Q${cx-18*s2},${cy-84*s2} ${cx-26*s2},${cy-68*s2}Z" fill="${hc}"/><path d="M${cx-12*s2},${cy-76*s2} L${cx-16*s2},${cy-96*s2} L${cx-8*s2},${cy-80*s2}Z" fill="${hc}"/><path d="M${cx},${cy-80*s2} L${cx-2*s2},${cy-98*s2} L${cx+2*s2},${cy-98*s2}Z" fill="${hc}"/><path d="M${cx+12*s2},${cy-76*s2} L${cx+16*s2},${cy-96*s2} L${cx+8*s2},${cy-80*s2}Z" fill="${hc}"/>`;
+      if(stage>=3) return `<path d="M${cx-26*s2},${cy-66*s2} Q${cx},${cy-82*s2} ${cx+26*s2},${cy-66*s2} Q${cx+22*s2},${cy-84*s2} ${cx},${cy-88*s2} Q${cx-22*s2},${cy-84*s2} ${cx-26*s2},${cy-66*s2}Z" fill="${hc}"/><path d="M${cx-24*s2},${cy-66*s2} Q${cx-32*s2},${cy-46*s2} ${cx-30*s2},${cy-30*s2}" fill="none" stroke="${hc}" stroke-width="${6*s2}" stroke-linecap="round"/><path d="M${cx+24*s2},${cy-66*s2} Q${cx+32*s2},${cy-46*s2} ${cx+30*s2},${cy-30*s2}" fill="none" stroke="${hc}" stroke-width="${6*s2}" stroke-linecap="round"/>`;
+    } else {
+      if(stage===0) return `<path d="M${cx-26*s2},${cy-64*s2} Q${cx},${cy-82*s2} ${cx+26*s2},${cy-64*s2} Q${cx+22*s2},${cy-80*s2} ${cx},${cy-84*s2} Q${cx-22*s2},${cy-80*s2} ${cx-26*s2},${cy-64*s2}Z" fill="${hc}"/><path d="M${cx-24*s2},${cy-64*s2} Q${cx-32*s2},${cy-40*s2} ${cx-30*s2},${cy-10*s2}" fill="none" stroke="${hc}" stroke-width="${8*s2}" stroke-linecap="round"/><path d="M${cx+24*s2},${cy-64*s2} Q${cx+32*s2},${cy-40*s2} ${cx+30*s2},${cy-10*s2}" fill="none" stroke="${hc}" stroke-width="${8*s2}" stroke-linecap="round"/><path d="M${cx},${cy-80*s2} L${cx-2*s2},${cy-20*s2}" fill="none" stroke="${hc}" stroke-width="${9*s2}" stroke-linecap="round"/>`;
+      if(stage===1) return `<path d="M${cx-26*s2},${cy-66*s2} Q${cx},${cy-82*s2} ${cx+26*s2},${cy-66*s2} Q${cx+20*s2},${cy-82*s2} ${cx},${cy-88*s2} Q${cx-20*s2},${cy-82*s2} ${cx-26*s2},${cy-66*s2}Z" fill="${hc}"/><path d="M${cx-24*s2},${cy-64*s2} Q${cx-32*s2},${cy-38*s2} ${cx-30*s2},${cy-6*s2}" fill="none" stroke="${hc}" stroke-width="${8*s2}" stroke-linecap="round"/><path d="M${cx+24*s2},${cy-64*s2} Q${cx+32*s2},${cy-38*s2} ${cx+30*s2},${cy-6*s2}" fill="none" stroke="${hc}" stroke-width="${8*s2}" stroke-linecap="round"/><path d="M${cx},${cy-82*s2} L${cx-1*s2},${cy-20*s2}" fill="none" stroke="${hc}" stroke-width="${10*s2}" stroke-linecap="round"/><rect x="${cx-5*s2}" y="${cy-26*s2}" width="${10*s2}" height="${5*s2}" rx="${2.5*s2}" fill="#ffd16c" fill-opacity=".7"/>`;
+      if(stage===2) return `<path d="M${cx-26*s2},${cy-66*s2} Q${cx},${cy-82*s2} ${cx+26*s2},${cy-66*s2} Q${cx+18*s2},${cy-84*s2} ${cx},${cy-88*s2} Q${cx-18*s2},${cy-84*s2} ${cx-26*s2},${cy-66*s2}Z" fill="${hc}"/><circle cx="${cx}" cy="${cy-88*s2}" r="${10*s2}" fill="${hc}"/><path d="M${cx-24*s2},${cy-66*s2} Q${cx-32*s2},${cy-42*s2} ${cx-30*s2},${cy-20*s2}" fill="none" stroke="${hc}" stroke-width="${7*s2}" stroke-linecap="round"/><path d="M${cx+24*s2},${cy-66*s2} Q${cx+32*s2},${cy-42*s2} ${cx+30*s2},${cy-20*s2}" fill="none" stroke="${hc}" stroke-width="${7*s2}" stroke-linecap="round"/>`;
+      if(stage>=3) return `<path d="M${cx-26*s2},${cy-66*s2} Q${cx},${cy-82*s2} ${cx+26*s2},${cy-66*s2} Q${cx+22*s2},${cy-84*s2} ${cx},${cy-90*s2} Q${cx-22*s2},${cy-84*s2} ${cx-26*s2},${cy-66*s2}Z" fill="${hc}"/><path d="M${cx-24*s2},${cy-64*s2} Q${cx-36*s2},${cy-36*s2} ${cx-34*s2},${cy-2*s2}" fill="none" stroke="${hc}" stroke-width="${10*s2}" stroke-linecap="round"/><path d="M${cx+24*s2},${cy-64*s2} Q${cx+36*s2},${cy-36*s2} ${cx+34*s2},${cy-2*s2}" fill="none" stroke="${hc}" stroke-width="${10*s2}" stroke-linecap="round"/><path d="M${cx},${cy-82*s2} L${cx-2*s2},${cy-20*s2}" fill="none" stroke="${hc}" stroke-width="${10*s2}" stroke-linecap="round"/>`;
+    }
+    return '';
+  }
+
+  // Shirt/dress colors
+  const shirtC=['#1e4060','#1e3820','#3a1808','#1e1038','#302000'][stage];
+  const shirtD=['#0d2535','#102510','#240e04','#140828','#201400'][stage];
+  const pantC=['#0e1c2a','#162010','#1a0c06','#14081e','#1a1200'][stage];
+
+  // Head accessory
+  function headAcc(){
+    if(stage===0) return `<path d="M${cx-4*scale},${cy-96*scale} Q${cx},${cy-100*scale} ${cx+4*scale},${cy-96*scale}" fill="none" stroke="${ac}" stroke-width="${scale}" stroke-opacity=".5"/>`;
+    if(stage===1) return `<circle cx="${cx}" cy="${cy-100*scale}" r="${5*scale}" fill="${ac}" fill-opacity=".7" style="animation:breathPulse 2s ease-in-out infinite;transform-origin:${cx}px ${cy-100*scale}px;"/>`;
+    if(stage===2) return `<path d="M${cx-18*scale},${cy-70*scale} Q${cx-12*scale},${cy-84*scale} ${cx},${cy-88*scale} Q${cx+12*scale},${cy-84*scale} ${cx+18*scale},${cy-70*scale}" fill="#ff734a" fill-opacity=".22"/><circle cx="${cx}" cy="${cy-88*scale}" r="${4*scale}" fill="#ff734a" fill-opacity=".8" style="animation:breathPulse 2s ease-in-out infinite;transform-origin:${cx}px ${cy-88*scale}px;"/><path d="M${cx-8*scale},${cy-86*scale} L${cx-14*scale},${cy-102*scale}" fill="none" stroke="#ffd16c" stroke-width="${1.5*scale}" stroke-opacity=".65"/><path d="M${cx+8*scale},${cy-86*scale} L${cx+14*scale},${cy-102*scale}" fill="none" stroke="#ffd16c" stroke-width="${1.5*scale}" stroke-opacity=".65"/>`;
+    if(stage===3) return `<circle cx="${cx}" cy="${cy-102*scale}" r="${6*scale}" fill="#c77dff" fill-opacity=".8" style="animation:breathPulse 2s ease-in-out infinite;transform-origin:${cx}px ${cy-102*scale}px;"/><path d="M${cx-3*scale},${cy-98*scale} L${cx},${cy-80*scale}" fill="none" stroke="#c77dff" stroke-width="${1.5*scale}" stroke-opacity=".5"/><path d="M${cx+3*scale},${cy-98*scale} L${cx},${cy-80*scale}" fill="none" stroke="#c77dff" stroke-width="${1.5*scale}" stroke-opacity=".5"/><circle cx="${cx-20*scale}" cy="${cy-80*scale}" r="${4*scale}" fill="#81ecff" fill-opacity=".6" style="animation:breathPulse 2s ease-in-out .5s infinite;transform-origin:${cx-20*scale}px ${cy-80*scale}px;"/><circle cx="${cx+20*scale}" cy="${cy-80*scale}" r="${4*scale}" fill="#ffd16c" fill-opacity=".6" style="animation:breathPulse 2s ease-in-out 1s infinite;transform-origin:${cx+20*scale}px ${cy-80*scale}px;"/>`;
+    if(stage===4) return `<path d="M${cx-22*scale},${cy-66*scale} L${cx-24*scale},${cy-88*scale} L${cx-12*scale},${cy-78*scale} L${cx},${cy-104*scale} L${cx+12*scale},${cy-78*scale} L${cx+24*scale},${cy-88*scale} L${cx+22*scale},${cy-66*scale}Z" fill="none" stroke="#fdc003" stroke-width="${2*scale}" stroke-opacity=".8"/><path d="M${cx-22*scale},${cy-66*scale} L${cx-24*scale},${cy-88*scale} L${cx-12*scale},${cy-78*scale} L${cx},${cy-104*scale} L${cx+12*scale},${cy-78*scale} L${cx+24*scale},${cy-88*scale} L${cx+22*scale},${cy-66*scale}Z" fill="#fdc003" fill-opacity=".1"/><circle cx="${cx}" cy="${cy-104*scale}" r="${5*scale}" fill="#fdc003" fill-opacity=".9" style="animation:breathPulse 2s ease-in-out infinite;transform-origin:${cx}px ${cy-104*scale}px;"/><circle cx="${cx-12*scale}" cy="${cy-78*scale}" r="${3*scale}" fill="#ff734a" fill-opacity=".8"/><circle cx="${cx+12*scale}" cy="${cy-78*scale}" r="${3*scale}" fill="#81ecff" fill-opacity=".8"/>`;
+    return '';
+  }
+
+  // Chest emblem
+  function emblem(){
+    const ey=cy+10*scale;
+    if(stage===0) return `<circle cx="${cx}" cy="${ey}" r="${8*scale}" fill="none" stroke="${ac}" stroke-width="${1.5*scale}" stroke-opacity=".55"/><circle cx="${cx}" cy="${ey}" r="${3*scale}" fill="${ac}" fill-opacity=".45"/>`;
+    if(stage===1) return `<circle cx="${cx}" cy="${ey}" r="${8*scale}" fill="none" stroke="#ffd16c" stroke-width="${scale}" stroke-opacity=".5" style="animation:spinCW 8s linear infinite;transform-origin:${cx}px ${ey}px;"/><circle cx="${cx}" cy="${ey}" r="${5*scale}" fill="none" stroke="#81ecff" stroke-width="${scale}" stroke-opacity=".4" style="animation:spinCCW 10s linear infinite;transform-origin:${cx}px ${ey}px;"/><circle cx="${cx}" cy="${ey}" r="${2*scale}" fill="#ffd16c" fill-opacity=".7"/>`;
+    if(stage===2) return `<polygon points="${cx},${ey-9*scale} ${cx+8*scale},${ey+5*scale} ${cx-8*scale},${ey+5*scale}" fill="none" stroke="#ff734a" stroke-width="${1.5*scale}" stroke-opacity=".6"/><circle cx="${cx}" cy="${ey}" r="${3*scale}" fill="#ff734a" fill-opacity=".7" style="animation:breathPulse 2s ease-in-out infinite;transform-origin:${cx}px ${ey}px;"/>`;
+    if(stage===3) return `<circle cx="${cx}" cy="${ey}" r="${9*scale}" fill="none" stroke="#c77dff" stroke-width="${1.2*scale}" stroke-opacity=".5" style="animation:spinCW 10s linear infinite;transform-origin:${cx}px ${ey}px;"/><circle cx="${cx}" cy="${ey}" r="${5*scale}" fill="none" stroke="#81ecff" stroke-width="${scale}" stroke-opacity=".4"/><circle cx="${cx}" cy="${ey}" r="${2.5*scale}" fill="#c77dff" fill-opacity=".8" style="animation:breathPulse 2s ease-in-out infinite;transform-origin:${cx}px ${ey}px;"/>`;
+    if(stage===4) return `<circle cx="${cx}" cy="${ey}" r="${10*scale}" fill="none" stroke="#fdc003" stroke-width="${1.5*scale}" stroke-opacity=".55" style="animation:spinCW 8s linear infinite;transform-origin:${cx}px ${ey}px;"/><circle cx="${cx}" cy="${ey}" r="${7*scale}" fill="none" stroke="#ff734a" stroke-width="${scale}" stroke-opacity=".4" style="animation:spinCCW 12s linear infinite;transform-origin:${cx}px ${ey}px;"/><circle cx="${cx}" cy="${ey}" r="${2*scale}" fill="#fdc003" fill-opacity=".9" style="animation:breathPulse 2s ease-in-out infinite;transform-origin:${cx}px ${ey}px;"/>`;
+    return '';
+  }
+
+  const s2=scale;
+  const isBoy=gender==='boy';
+
+  const legY=cy+36*s2, legH=44*s2, footY=cy+82*s2;
+  const bodyTop=cy-44*s2, bodyH=84*s2;
+  const armY=cy-38*s2, armH=55*s2;
+  const headCY=cy-70*s2, headRX=24*s2, headRY=27*s2;
+
+  const bodyPath=isBoy
+    ?`M${cx-24*s2},${cy-44*s2} Q${cx-28*s2},${cy-12*s2} ${cx-26*s2},${cy+36*s2} L${cx+26*s2},${cy+36*s2} Q${cx+28*s2},${cy-12*s2} ${cx+24*s2},${cy-44*s2} Q${cx+14*s2},${cy-52*s2} ${cx},${cy-50*s2} Q${cx-14*s2},${cy-52*s2} ${cx-24*s2},${cy-44*s2}Z`
+    :`M${cx-22*s2},${cy-42*s2} Q${cx-26*s2},${cy-10*s2} ${cx-24*s2},${cy+36*s2} L${cx+24*s2},${cy+36*s2} Q${cx+26*s2},${cy-10*s2} ${cx+22*s2},${cy-42*s2} Q${cx+12*s2},${cy-50*s2} ${cx},${cy-48*s2} Q${cx-12*s2},${cy-50*s2} ${cx-22*s2},${cy-42*s2}Z`;
+
+  const skirtPath=!isBoy?`<path d="M${cx-24*s2},${cy+20*s2} Q${cx-32*s2},${cy+60*s2} ${cx-28*s2},${cy+82*s2} L${cx+28*s2},${cy+82*s2} Q${cx+32*s2},${cy+60*s2} ${cx+24*s2},${cy+20*s2}Z" fill="${pantC}" opacity=".9"/>
+<path d="M${cx-28*s2},${cy+52*s2} Q${cx},${cy+44*s2} ${cx+28*s2},${cy+52*s2}" fill="none" stroke="${ac}" stroke-width="${scale}" stroke-opacity=".4"/>`:'';
+
+  // Earrings for girl
+  const earrings=!isBoy?`<circle cx="${cx-28*s2}" cy="${cy-60*s2}" r="${3*s2}" fill="${ac}" fill-opacity=".8"/><circle cx="${cx+28*s2}" cy="${cy-60*s2}" r="${3*s2}" fill="${ac}" fill-opacity=".8"/>`:'';
+
+  // Bracelet
+  const bracelet=!isBoy?`<rect x="${cx-47*s2}" y="${cy+4*s2}" width="${9*s2}" height="${4*s2}" rx="${2*s2}" fill="${ac}" fill-opacity=".65"/><rect x="${cx+38*s2}" y="${cy+4*s2}" width="${9*s2}" height="${4*s2}" rx="${2*s2}" fill="${ac}" fill-opacity=".65"/>`:'';
+
+  // Necklace for girl lvl 1+
+  const necklace=(!isBoy&&stage>=1)?`<path d="M${cx-12*s2},${cy-46*s2} Q${cx},${cy-40*s2} ${cx+12*s2},${cy-46*s2}" fill="none" stroke="${ac}" stroke-width="${1.5*s2}" stroke-opacity=".6"/><circle cx="${cx}" cy="${cy-40*s2}" r="${2.5*s2}" fill="${ac}" fill-opacity=".75"/>`:'';
+
+  return`<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" style="overflow:visible;">
+    ${aura()}
+    <ellipse cx="${cx}" cy="${cy+h*0.36}" rx="${28*s2}" ry="${5*s2}" fill="rgba(0,0,0,.25)"/>
+    ${isBoy?`
+    <rect x="${cx-16*s2}" y="${legY}" width="${15*s2}" height="${legH}" rx="${7*s2}" fill="${pantC}"/>
+    <rect x="${cx+1*s2}" y="${legY}" width="${15*s2}" height="${legH}" rx="${7*s2}" fill="${pantC}"/>
+    <ellipse cx="${cx-8*s2}" cy="${footY}" rx="${11*s2}" ry="${5.5*s2}" fill="#111"/>
+    <ellipse cx="${cx+8*s2}" cy="${footY}" rx="${11*s2}" ry="${5.5*s2}" fill="#111"/>
+    <rect x="${cx-20*s2}" y="${legY-2*s2}" width="${40*s2}" height="${8*s2}" rx="${4*s2}" fill="${pantC}"/>
+    <rect x="${cx-6*s2}" y="${legY-2*s2}" width="${12*s2}" height="${8*s2}" rx="${3*s2}" fill="${ac}" fill-opacity=".6"/>
+    `:`<rect x="${cx-10*s2}" y="${footY-8*s2}" width="${18*s2}" height="${9*s2}" rx="${5*s2}" fill="#111"/>
+    <rect x="${cx+8*s2}" y="${footY-8*s2}" width="${18*s2}" height="${9*s2}" rx="${5*s2}" fill="#111"/>
+    <rect x="${cx-8*s2}" y="${footY-10*s2}" width="${9*s2}" height="${3*s2}" rx="${1.5*s2}" fill="${ac}" fill-opacity=".55"/>
+    <rect x="${cx+8*s2}" y="${footY-10*s2}" width="${9*s2}" height="${3*s2}" rx="${1.5*s2}" fill="${ac}" fill-opacity=".55"/>
+    `}
+    <path d="${bodyPath}" fill="${shirtC}"/>
+    <path d="${isBoy?`M${cx-24*s2},${cy-44*s2} Q${cx},${cy-56*s2} ${cx+24*s2},${cy-44*s2}`:
+      `M${cx-22*s2},${cy-42*s2} Q${cx},${cy-54*s2} ${cx+22*s2},${cy-42*s2}`}" fill="none" stroke="${ac}" stroke-width="${1.5*s2}" stroke-opacity=".45"/>
+    ${skirtPath}
+    ${emblem()}
+    <path d="M${cx-24*s2},${cy-38*s2} Q${cx-42*s2},${cy-18*s2} ${cx-40*s2},${cy+18*s2} Q${cx-38*s2},${cy+26*s2} ${cx-34*s2},${cy+24*s2} Q${cx-30*s2},${cy+18*s2} ${cx-28*s2},${cy+6*s2} L${cx-24*s2},${cy-34*s2}Z" fill="${sk}"/>
+    <path d="M${cx+24*s2},${cy-38*s2} Q${cx+42*s2},${cy-18*s2} ${cx+40*s2},${cy+18*s2} Q${cx+38*s2},${cy+26*s2} ${cx+34*s2},${cy+24*s2} Q${cx+30*s2},${cy+18*s2} ${cx+28*s2},${cy+6*s2} L${cx+24*s2},${cy-34*s2}Z" fill="${sk}"/>
+    <ellipse cx="${cx-37*s2}" cy="${cy+26*s2}" rx="${7*s2}" ry="${8*s2}" fill="${sk}"/>
+    <ellipse cx="${cx+37*s2}" cy="${cy+26*s2}" rx="${7*s2}" ry="${8*s2}" fill="${sk}"/>
+    ${bracelet}
+    ${stage>=2?`<path d="M${cx-40*s2},${cy+18*s2} Q${cx-36*s2},${cy+28*s2} ${cx-37*s2},${cy+26*s2}" fill="none" stroke="${ac}" stroke-width="${2*s2}" stroke-opacity=".5" stroke-linecap="round"/><path d="M${cx+40*s2},${cy+18*s2} Q${cx+36*s2},${cy+28*s2} ${cx+37*s2},${cy+26*s2}" fill="none" stroke="${ac}" stroke-width="${2*s2}" stroke-opacity=".5" stroke-linecap="round"/>`:``}
+    <rect x="${cx-7*s2}" y="${cy-50*s2}" width="${14*s2}" height="${18*s2}" rx="${5*s2}" fill="${sk}"/>
+    ${necklace}
+    <ellipse cx="${cx}" cy="${cy-72*s2}" rx="${headRX}" ry="${headRY}" fill="${sk}"/>
+    <ellipse cx="${cx-28*s2}" cy="${cy-70*s2}" rx="${5*s2}" ry="${7*s2}" fill="${sk}" stroke="${skd}" stroke-width=".5"/>
+    <ellipse cx="${cx+28*s2}" cy="${cy-70*s2}" rx="${5*s2}" ry="${7*s2}" fill="${sk}" stroke="${skd}" stroke-width=".5"/>
+    ${earrings}
+    ${hair()}
+    <g style="animation:eyeBlink 4s ease-in-out infinite;transform-box:fill-box;transform-origin:${cx}px ${cy-70*s2}px;">
+      <ellipse cx="${cx-10*s2}" cy="${cy-70*s2}" rx="${5.5*s2}" ry="${6*s2}" fill="white"/>
+      <ellipse cx="${cx+10*s2}" cy="${cy-70*s2}" rx="${5.5*s2}" ry="${6*s2}" fill="white"/>
+      <ellipse cx="${cx-9.5*s2}" cy="${cy-70*s2}" rx="${3*s2}" ry="${3.5*s2}" fill="#1a0800"/>
+      <ellipse cx="${cx+10.5*s2}" cy="${cy-70*s2}" rx="${3*s2}" ry="${3.5*s2}" fill="#1a0800"/>
+      <circle cx="${cx-8.5*s2}" cy="${cy-71*s2}" r="${scale}" fill="white"/>
+      <circle cx="${cx+11.5*s2}" cy="${cy-71*s2}" r="${scale}" fill="white"/>
+    </g>
+    ${!isBoy?`<path d="M${cx-14*s2},${cy-80*s2} Q${cx-10*s2},${cy-83*s2} ${cx-6*s2},${cy-80*s2}" fill="none" stroke="#1a0800" stroke-width="${2*s2}" stroke-linecap="round"/><path d="M${cx+6*s2},${cy-80*s2} Q${cx+10*s2},${cy-83*s2} ${cx+14*s2},${cy-80*s2}" fill="none" stroke="#1a0800" stroke-width="${2*s2}" stroke-linecap="round"/><ellipse cx="${cx-14*s2}" cy="${cy-64*s2}" rx="${7*s2}" ry="${4*s2}" fill="#ff9999" fill-opacity=".2"/><ellipse cx="${cx+14*s2}" cy="${cy-64*s2}" rx="${7*s2}" ry="${4*s2}" fill="#ff9999" fill-opacity=".2"/><path d="M${cx-5*s2},${cy-60*s2} Q${cx},${cy-55*s2} ${cx+5*s2},${cy-60*s2}" fill="none" stroke="#c05060" stroke-width="${2*s2}" stroke-linecap="round"/>`
+    :`<path d="M${cx-14*s2},${cy-80*s2} Q${cx-9*s2},${cy-83*s2} ${cx-4*s2},${cy-80*s2}" fill="none" stroke="#1a0800" stroke-width="${1.5*s2}" stroke-linecap="round"/><path d="M${cx+4*s2},${cy-80*s2} Q${cx+9*s2},${cy-83*s2} ${cx+14*s2},${cy-80*s2}" fill="none" stroke="#1a0800" stroke-width="${1.5*s2}" stroke-linecap="round"/><path d="M${cx-8*s2},${cy-62*s2} Q${cx},${cy-57*s2} ${cx+8*s2},${cy-62*s2}" fill="none" stroke="${skd}" stroke-width="${1.5*s2}" stroke-linecap="round"/>`}
+    <path d="M${cx-1*s2},${cy-67*s2} Q${cx},${cy-64*s2} ${cx+1*s2},${cy-67*s2}" fill="none" stroke="${skd}" stroke-opacity=".4" stroke-width="${scale}"/>
+    ${headAcc()}
+  </svg>`;
+}
+
+function renderAvatar(el,stage,w,h){
+  if(!el)return;
+  const s=STAGES[stage];
+  el.style.filter=`drop-shadow(0 0 ${Math.min(w,h)*0.12}px ${s.ac}55)`;
+  el.innerHTML=`<div class="char-float" style="width:${w}px;height:${h}px;">${charSVG(avGender,stage,w,h)}</div>`;
+}
+
+function renderAllAvatars(){
+  renderAvatar(document.getElementById('topbar-av'),curStage,36,36);
+  renderAvatar(document.getElementById('home-av'),curStage,110,110);
+  renderAvatar(document.getElementById('p1-av'),0,38,38);
+  renderAvatar(document.getElementById('p2-av'),1,38,38);
+  renderAvatar(document.getElementById('p3-av'),2,38,38);
+  renderAvatar(document.getElementById('p4-av'),3,38,38);
+  renderAvatar(document.getElementById('p5-av'),4,38,38);
+  ['s1','s2','s3','s4','s5'].forEach(id=>{const el=document.getElementById(id+'-av');if(el)renderAvatar(el,curStage,44,44);});
+  renderAvatar(document.getElementById('mandala-av'),curStage,160,200);
+  renderAvatar(document.getElementById('prof-av-big'),curStage,140,175);
+  renderAvatar(document.getElementById('splash-av'),curStage,72,72);
+  buildProfStrip();
+  if(document.getElementById('am-big-av').children.length||document.getElementById('av-modal').classList.contains('open')){
+    buildAvModal(modalStage);
+  }
+}
+
+function buildProfStrip(){
+  const strip=document.getElementById('prof-ev-strip');
+  if(!strip)return;
+  strip.innerHTML='';
+  STAGES.forEach((s,i)=>{
+    const w=document.createElement('div');
+    w.style.cssText='display:flex;flex-direction:column;align-items:center;gap:3px;flex-shrink:0;cursor:pointer;';
+    const a=document.createElement('div');
+    a.style.cssText=`width:40px;height:40px;border-radius:50%;border:1.5px solid ${i===curStage?s.ac:'rgba(70,70,92,.3)'};padding:1px;`;
+    renderAvatar(a,i,38,38);
+    const l=document.createElement('span');
+    l.style.cssText=`font-family:'Space Grotesk';font-size:9px;color:${i===curStage?s.ac:'#46465c'};`;
+    l.textContent=i===curStage?'YOU':'LV'+(i+1);
+    w.appendChild(a);w.appendChild(l);
+    if(i<4){const ar=document.createElement('div');ar.style.cssText='font-size:9px;color:#46465c;margin:0 2px;padding-bottom:12px;';ar.textContent='→';strip.appendChild(w);strip.appendChild(ar);}
+    else strip.appendChild(w);
+  });
+}
+
+// ═══ AVATAR MODAL ═══
+function openAvModal(){modalStage=curStage;buildAvModal(modalStage);document.getElementById('av-modal').classList.add('open');}
+function closeAvModal(){document.getElementById('av-modal').classList.remove('open');}
+function setAvGender(g){
+  avGender=g;
+  document.getElementById('am-gb-boy').style.cssText=`flex:1;py:8px;border-radius:9999px;font-family:'Space Grotesk';font-size:12px;font-weight:600;transition:all .2s;background:${g==='boy'?'rgba(255,209,108,.15)':'transparent'};color:${g==='boy'?'#ffd16c':'#74738b'};border:1.5px solid ${g==='boy'?'#ffd16c':'rgba(70,70,92,.4)'};padding:7px;`;
+  document.getElementById('am-gb-girl').style.cssText=`flex:1;py:8px;border-radius:9999px;font-family:'Space Grotesk';font-size:12px;font-weight:600;transition:all .2s;background:${g==='girl'?'rgba(255,209,108,.15)':'transparent'};color:${g==='girl'?'#ffd16c':'#74738b'};border:1.5px solid ${g==='girl'?'#ffd16c':'rgba(70,70,92,.4)'};padding:7px;`;
+  buildAvModal(modalStage);
+  renderAllAvatars();
+}
+function buildAvModal(idx){
+  modalStage=idx;
+  const s=STAGES[idx];
+  document.getElementById('am-title').textContent=s.name;
+  document.getElementById('am-title').style.color=s.ac;
+  renderAvatar(document.getElementById('am-big-av'),idx,200,260);
+  document.getElementById('am-desc').textContent=s.desc;
+  document.getElementById('am-traits').innerHTML=s.traits.map(([t,bg,c])=>`<span style="font-family:'Space Grotesk';font-size:11px;font-weight:600;padding:4px 12px;border-radius:999px;background:${bg};color:${c};">${t}</span>`).join('');
+  document.getElementById('am-glows').innerHTML=s.glows.map((g,i)=>`<div style="display:flex;align-items:center;gap:7px;margin-bottom:5px;"><div style="width:7px;height:7px;border-radius:50%;background:${s.glowC[i]};box-shadow:0 0 6px ${s.glowC[i]};flex-shrink:0;"></div><span style="font-family:'Manrope';font-size:12px;color:#aaa8c3;">${g}</span></div>`).join('');
+  document.getElementById('am-next').innerHTML=s.next
+    ?`<div style="margin-top:2px;"><div style="display:flex;justify-content:space-between;margin-bottom:5px;"><span style="font-family:'Space Grotesk';font-size:10px;color:#aaa8c3;">NEXT: ${s.next.toUpperCase()}</span><span style="font-family:'Space Grotesk';font-size:11px;font-weight:600;color:${s.ac};">+${s.nextXp} XP</span></div><div style="height:5px;border-radius:3px;background:rgba(70,70,92,.4);overflow:hidden;"><div style="height:100%;border-radius:3px;background:${s.ac};width:${s.prog}%;"></div></div><p style="font-family:'Manrope';font-size:11px;color:#74738b;margin-top:4px;">${s.prog}% toward next evolution</p></div>`
+    :`<p style="font-family:'Manrope';font-size:12px;color:#fdc003;text-align:center;padding:8px 0;">✨ Maximum form — Wisdom Keeper achieved!</p>`;
+  document.getElementById('am-stages').innerHTML=STAGES.map((st,i)=>`<div onclick="buildAvModal(${i})" style="cursor:pointer;width:${i===idx?34:24}px;height:${i===idx?34:24}px;border-radius:50%;border:1.5px solid ${i===idx?st.ac:'rgba(70,70,92,.35)'};display:flex;align-items:center;justify-content:center;font-size:${i===idx?15:10}px;transition:all .25s;background:${i===idx?st.ac+'20':'transparent'};">${st.emoji}</div>`).join('');
+}
+
+// ═══ NĀḌĪ SCANNER ═══
+function openScanner(){
+  scSelectedMethod=null;scSelectedNostril=null;scConfidence=50;
+  document.getElementById('scanner-modal').style.display='block';
+  buildScannerStep(0);
+}
+function closeScanner(){document.getElementById('scanner-modal').style.display='none';}
+
+function buildScannerStep(n){
+  document.querySelectorAll('.sc-step').forEach(s=>{s.style.display='none';});
+  const el=document.getElementById('sc-s'+n);
+  el.style.display='block';
+  el.style.animation='fadeUp .3s ease';
+
+  if(n===0) el.innerHTML=scanStep0();
+  else if(n===1) el.innerHTML=scanStep1();
+  else if(n===2) el.innerHTML=scanStep2();
+  else if(n===3) el.innerHTML=scanStep3();
+  else if(n===4){el.innerHTML=scanStep4();return;}
+  document.getElementById('scanner-modal').scrollTo(0,0);
+}
+
+function dots(curr){return `<div style="display:flex;gap:6px;justify-content:center;margin-bottom:14px;">${[1,2,3].map(i=>`<div style="width:7px;height:7px;border-radius:50%;background:${i<curr?'#ffd16c':i===curr?'#ffd16c':'rgba(70,70,92,.4)'};${i===curr?'box-shadow:0 0 8px rgba(255,209,108,.6);transform:scale(1.3)':''}; transition:all .3s;"></div>`).join('')}</div>`;}
+
+function scanStep0(){
+  return `<div style="text-align:center;padding:4px 0 16px;">
+    <p style="font-size:12px;color:#74738b;line-height:1.8;">Before choosing Sun Dragon 🐉 or Moon Mage 🌙,<br>you need to discover which nostril is active right now.</p>
+  </div>
+  <div style="display:flex;justify-content:center;margin:6px 0 16px;">
+    <svg width="170" height="140" viewBox="0 0 170 140">
+      <defs>
+        <radialGradient id="nlg" cx="35%" cy="50%" r="55%"><stop offset="0%" stop-color="#81ecff" stop-opacity=".55"/><stop offset="100%" stop-color="#81ecff" stop-opacity="0"/></radialGradient>
+        <radialGradient id="nrg" cx="65%" cy="50%" r="55%"><stop offset="0%" stop-color="#ff734a" stop-opacity=".55"/><stop offset="100%" stop-color="#ff734a" stop-opacity="0"/></radialGradient>
+      </defs>
+      <ellipse cx="60" cy="90" rx="26" ry="20" fill="url(#nlg)" style="animation:breathPulse 2.2s ease-in-out infinite;transform-origin:60px 90px;"/>
+      <ellipse cx="110" cy="90" rx="26" ry="20" fill="url(#nrg)" style="animation:breathPulse 2.2s ease-in-out .7s infinite;transform-origin:110px 90px;"/>
+      <path d="M85,12 C70,12 58,28 56,50 C53,65 53,76 60,81 C64,83.5 68,83 71,81.5 C74,80 76,77 78,77 L85,77 L92,77 C94,77 96,80 99,81.5 C102,83 106,83.5 110,81 C117,76 117,65 114,50 C112,28 100,12 85,12Z" fill="#c68642" stroke="#a0672e" stroke-width="1"/>
+      <ellipse cx="69" cy="79" rx="11" ry="8.5" fill="#6b3a1f"/>
+      <ellipse cx="101" cy="79" rx="11" ry="8.5" fill="#6b3a1f"/>
+      <path d="M80,28 C78,46 76,62 74,76" fill="none" stroke="#a0672e" stroke-width=".8" opacity=".35"/>
+      <path d="M90,28 C92,46 94,62 96,76" fill="none" stroke="#a0672e" stroke-width=".8" opacity=".35"/>
+      <path d="M69,88 Q64,106 60,122" fill="none" stroke="#81ecff" stroke-width="1.8" stroke-opacity=".5" stroke-dasharray="3 3" style="animation:fadeUp 2s ease-in-out infinite;"/>
+      <path d="M101,88 Q106,106 110,122" fill="none" stroke="#ff734a" stroke-width="1.8" stroke-opacity=".5" stroke-dasharray="3 3" style="animation:fadeUp 2s ease-in-out .7s infinite;"/>
+      <text x="58" y="138" text-anchor="middle" font-size="10" fill="#81ecff" font-family="'Space Grotesk',sans-serif">Iḍā ☽</text>
+      <text x="112" y="138" text-anchor="middle" font-size="10" fill="#ff734a" font-family="'Space Grotesk',sans-serif">Piṅgalā ☀</text>
+    </svg>
+  </div>
+  <div style="background:#111127;border-radius:16px;padding:14px;margin-bottom:14px;border:1px solid rgba(70,70,92,.25);">
+    <p style="font-size:12px;color:#aaa8c3;line-height:1.8;">In Swara Yoga, one nostril is always more open. The <strong style="color:#81ecff;">left (Iḍā / Moon)</strong> powers creative, right-brain thinking. The <strong style="color:#ff734a;">right (Piṅgalā / Sun)</strong> powers logic and analysis. You'll use 1 of 3 ancient detection methods.</p>
+  </div>
+  <button class="btn-gold" onclick="buildScannerStep(1)" style="width:100%;padding:14px;border-radius:14px;font-size:15px;">Begin Detection →</button>`;
+}
+
+const METHODS=[
+  {id:'hand',icon:'✋',name:'Hand Back Test',sub:'Ancient · 10 sec',c:'#81ecff',
+   desc:'Hold the back of your hand under your nose. Feel which side has stronger, warmer airflow.'},
+  {id:'cotton',icon:'🪶',name:'Cotton / Feather Test',sub:'Classic · 15 sec',c:'#ffd16c',
+   desc:'Hold cotton or a thin thread in front of both nostrils. Watch which side moves it more.'},
+  {id:'mic',icon:'🎙️',name:'Microphone Scan',sub:'Digital Swara Guru · 20 sec',c:'#ff734a',
+   desc:'Hold phone below nose. The app listens to breath sound intensity to detect dominance.'},
+];
+
+function scanStep1(){
+  return `${dots(1)}
+  <p class="font-label text-xs mb-3" style="color:#ffd16c;letter-spacing:.1em;">STEP 1 OF 3 — CHOOSE METHOD</p>
+  <h3 style="font-family:'Plus Jakarta Sans';font-size:17px;font-weight:700;color:#e5e3ff;margin-bottom:4px;">How will you detect your Nāḍī?</h3>
+  <p style="font-size:12px;color:#74738b;margin-bottom:14px;">All three come from ancient Swara Yoga. Pick the one you can do right now.</p>
+  <div id="method-list">${METHODS.map(m=>`
+    <div class="method-card ${scSelectedMethod?.id===m.id?'active-m':''}" style="${scSelectedMethod?.id===m.id?`--ac:${m.c};border-color:${m.c};`:''}" onclick="selectMethod('${m.id}')">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <div style="font-size:26px;width:42px;text-align:center;flex-shrink:0;">${m.icon}</div>
+        <div style="flex:1;"><div style="font-size:14px;font-weight:700;color:#e5e3ff;font-family:'Plus Jakarta Sans';">${m.name}</div><div style="font-size:11px;color:${m.c};margin-bottom:3px;">${m.sub}</div><div style="font-size:12px;color:#74738b;line-height:1.5;">${m.desc}</div></div>
+        <div style="width:20px;height:20px;border-radius:50%;border:2px solid ${scSelectedMethod?.id===m.id?m.c:'rgba(70,70,92,.4)'};display:flex;align-items:center;justify-content:center;flex-shrink:0;">${scSelectedMethod?.id===m.id?`<div style="width:8px;height:8px;border-radius:50%;background:${m.c};"></div>`:''}</div>
+      </div>
+    </div>`).join('')}
+  </div>
+  <button id="method-next" onclick="buildScannerStep(2)" style="width:100%;padding:13px;border-radius:14px;font-size:14px;font-weight:700;font-family:'Plus Jakarta Sans';cursor:pointer;${scSelectedMethod?'background:linear-gradient(135deg,#ffd16c,#fdc003);color:#3d2b00;border:none;':'background:rgba(70,70,92,.25);color:#46465c;border:none;pointer-events:none;'}" ${scSelectedMethod?'':'disabled'}>
+    Use This Method →
+  </button>`;
+}
+
+function selectMethod(id){
+  scSelectedMethod=METHODS.find(m=>m.id===id);
+  buildScannerStep(1);
+}
+
+function scanStep2(){
+  const m=scSelectedMethod;
+  if(!m) return '<p>Select a method first</p>';
+  let content='';
+
+  if(m.id==='hand') content=`
+    <div style="background:#111127;border-radius:16px;padding:16px;margin-bottom:14px;text-align:center;">
+      <svg width="200" height="130" viewBox="0 0 200 130" style="display:block;margin:0 auto;">
+        <defs>
+          <radialGradient id="lhg" cx="35%" cy="50%" r="50%"><stop offset="0%" stop-color="#81ecff" stop-opacity=".5"/><stop offset="100%" stop-color="#81ecff" stop-opacity="0"/></radialGradient>
+          <radialGradient id="rhg" cx="65%" cy="50%" r="50%"><stop offset="0%" stop-color="#ff734a" stop-opacity=".5"/><stop offset="100%" stop-color="#ff734a" stop-opacity="0"/></radialGradient>
+        </defs>
+        <ellipse cx="72" cy="68" rx="28" ry="20" fill="url(#lhg)" style="animation:breathPulse 2s ease-in-out infinite;transform-origin:72px 68px;"/>
+        <ellipse cx="128" cy="68" rx="28" ry="20" fill="url(#rhg)" style="animation:breathPulse 2s ease-in-out .7s infinite;transform-origin:128px 68px;"/>
+        <path d="M100,8 C86,8 76,22 74,40 C71,54 71,64 78,68 C82,70 86,70 89,68.5 C92,67 94,64 96,64 L100,64 L104,64 C106,64 108,67 111,68.5 C114,70 118,70 122,68 C129,64 129,54 126,40 C124,22 114,8 100,8Z" fill="#c68642" stroke="#a0672e" stroke-width=".8"/>
+        <ellipse cx="85" cy="66" rx="9.5" ry="7" fill="#6b3a1f"/>
+        <ellipse cx="115" cy="66" rx="9.5" ry="7" fill="#6b3a1f"/>
+        <rect x="44" y="90" width="112" height="32" rx="10" fill="#c68642" stroke="#a0672e" stroke-width=".8"/>
+        <rect x="48" y="80" width="13" height="20" rx="6.5" fill="#c68642" stroke="#a0672e" stroke-width=".8"/>
+        <rect x="65" y="76" width="13" height="24" rx="6.5" fill="#c68642" stroke="#a0672e" stroke-width=".8"/>
+        <rect x="82" y="76" width="13" height="24" rx="6.5" fill="#c68642" stroke="#a0672e" stroke-width=".8"/>
+        <rect x="99" y="78" width="13" height="22" rx="6.5" fill="#c68642" stroke="#a0672e" stroke-width=".8"/>
+        <rect x="116" y="84" width="12" height="16" rx="6" fill="#c68642" stroke="#a0672e" stroke-width=".8"/>
+        <circle cx="74" cy="98" r="4" fill="#81ecff" fill-opacity=".6" style="animation:breathPulse 1.8s ease-in-out infinite;transform-origin:74px 98px;"/>
+        <circle cx="126" cy="98" r="4" fill="#ff734a" fill-opacity=".6" style="animation:breathPulse 1.8s ease-in-out .7s infinite;transform-origin:126px 98px;"/>
+      </svg>
+      <p style="font-size:12px;color:#aaa8c3;line-height:1.7;margin-top:10px;">Hold the back of your hand just below both nostrils. Breathe out slowly 3 times. Notice which side pushes more warm air.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+      <div id="hand-L" style="background:#17172f;border-radius:12px;padding:12px;text-align:center;border:1.5px solid rgba(129,236,255,.2);">
+        <div style="font-size:11px;color:#81ecff;margin-bottom:5px;font-family:'Space Grotesk';">LEFT felt</div>
+        <div id="hand-L-val" style="font-size:20px;font-weight:700;color:#81ecff;font-family:'Space Grotesk';">—</div>
+      </div>
+      <div id="hand-R" style="background:#17172f;border-radius:12px;padding:12px;text-align:center;border:1.5px solid rgba(255,115,74,.2);">
+        <div style="font-size:11px;color:#ff734a;margin-bottom:5px;font-family:'Space Grotesk';">RIGHT felt</div>
+        <div id="hand-R-val" style="font-size:20px;font-weight:700;color:#ff734a;font-family:'Space Grotesk';">—</div>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:14px;">
+      <button onclick="setHandResult('left')" style="padding:11px;border-radius:12px;font-size:12px;font-weight:700;font-family:'Space Grotesk';cursor:pointer;background:rgba(129,236,255,.12);border:1.5px solid rgba(129,236,255,.3);color:#81ecff;">🌙 Left stronger</button>
+      <button onclick="setHandResult('right')" style="padding:11px;border-radius:12px;font-size:12px;font-weight:700;font-family:'Space Grotesk';cursor:pointer;background:rgba(255,115,74,.12);border:1.5px solid rgba(255,115,74,.3);color:#ff734a;">☀ Right stronger</button>
+    </div>
+    <div id="hand-next" style="display:none;"><button class="btn-gold" onclick="buildScannerStep(3)" style="width:100%;padding:13px;border-radius:14px;font-size:14px;">Next → Confirm</button></div>`;
+
+  if(m.id==='cotton') content=`
+    <div style="background:#111127;border-radius:16px;padding:16px;margin-bottom:14px;text-align:center;">
+      <svg width="180" height="100" viewBox="0 0 180 100" style="display:block;margin:0 auto 10px;">
+        <path d="M90,6 C76,6 66,20 64,38 C61,52 61,62 68,66 C72,68 76,68 79,66.5 C82,65 84,62 86,62 L90,62 L94,62 C96,62 98,65 101,66.5 C104,68 108,68 112,66 C119,62 119,52 116,38 C114,20 104,6 90,6Z" fill="#c68642" stroke="#a0672e" stroke-width=".8"/>
+        <ellipse cx="76" cy="64" rx="9" ry="7" fill="#6b3a1f"/>
+        <ellipse cx="104" cy="64" rx="9" ry="7" fill="#6b3a1f"/>
+        <line x1="20" y1="78" x2="160" y2="78" stroke="#e5e3ff" stroke-width="1.2" stroke-opacity=".45" stroke-dasharray="4 2"/>
+        <circle cx="76" cy="78" r="6" fill="white" fill-opacity=".8" id="cotL"/>
+        <circle cx="104" cy="78" r="6" fill="white" fill-opacity=".8" id="cotR"/>
+      </svg>
+      <p style="font-size:12px;color:#aaa8c3;line-height:1.7;">Hold cotton or thread in front of both nostrils. Breathe out gently. Which side moves the cotton more?</p>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;">
+      <button onclick="setCottonResult('left')" style="padding:12px;border-radius:12px;font-size:12px;font-weight:700;font-family:'Space Grotesk';cursor:pointer;background:rgba(129,236,255,.12);border:1.5px solid rgba(129,236,255,.3);color:#81ecff;line-height:1.5;">🌙 Left<br><span style="font-size:10px;font-weight:400;color:#74738b;">moved more</span></button>
+      <button onclick="setCottonResult('right')" style="padding:12px;border-radius:12px;font-size:12px;font-weight:700;font-family:'Space Grotesk';cursor:pointer;background:rgba(255,115,74,.12);border:1.5px solid rgba(255,115,74,.3);color:#ff734a;line-height:1.5;">☀ Right<br><span style="font-size:10px;font-weight:400;color:#74738b;">moved more</span></button>
+    </div>
+    <button onclick="setCottonResult('both')" style="width:100%;padding:10px;border-radius:12px;font-size:12px;font-weight:700;font-family:'Space Grotesk';cursor:pointer;background:rgba(255,209,108,.1);border:1.5px solid rgba(255,209,108,.3);color:#ffd16c;margin-bottom:12px;">⚖ Both equal — Sushumna active!</button>
+    <div id="cotton-next" style="display:none;"><button class="btn-gold" onclick="buildScannerStep(3)" style="width:100%;padding:13px;border-radius:14px;font-size:14px;">Next → Confirm</button></div>`;
+
+  if(m.id==='mic') content=`
+    <div style="background:#111127;border-radius:16px;padding:16px;margin-bottom:14px;text-align:center;">
+      <p style="font-size:12px;color:#aaa8c3;line-height:1.7;margin-bottom:14px;">Hold your device with the mic just below your nose. Breathe out normally for 20 seconds.</p>
+      <div style="position:relative;width:110px;height:110px;margin:0 auto 14px;">
+        <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(129,236,255,.25);animation:waveExpand 2.5s ease-out infinite;"></div>
+        <div style="position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(129,236,255,.15);animation:waveExpand 2.5s ease-out .8s infinite;"></div>
+        <div onclick="toggleMicScan()" id="mic-btn" style="width:100%;height:100%;border-radius:50%;background:radial-gradient(circle,rgba(129,236,255,.15),rgba(0,212,236,.04));border:2px solid rgba(129,236,255,.38);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-direction:column;gap:4px;">
+          <div style="font-size:30px;" id="mic-ico">🎙️</div>
+          <div style="font-size:9px;color:#81ecff;font-family:'Space Grotesk';letter-spacing:.1em;" id="mic-lbl">TAP TO SCAN</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:8px;margin-bottom:10px;">
+        <div style="flex:1;">
+          <div style="font-size:10px;color:#81ecff;margin-bottom:3px;font-family:'Space Grotesk';">LEFT ☽</div>
+          <div style="height:70px;background:#17172f;border-radius:8px;position:relative;overflow:hidden;border:1px solid rgba(129,236,255,.2);">
+            <div id="mic-L-bar" style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,#81ecff55,#81ecff22);height:20%;transition:height .15s;"></div>
+            <div id="mic-L-val" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:13px;font-weight:700;color:#81ecff;font-family:'Space Grotesk';">—</div>
+          </div>
+        </div>
+        <div style="flex:1;">
+          <div style="font-size:10px;color:#ff734a;margin-bottom:3px;font-family:'Space Grotesk';">RIGHT ☀</div>
+          <div style="height:70px;background:#17172f;border-radius:8px;position:relative;overflow:hidden;border:1px solid rgba(255,115,74,.2);">
+            <div id="mic-R-bar" style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(to top,#ff734a55,#ff734a22);height:20%;transition:height .15s;"></div>
+            <div id="mic-R-val" style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:13px;font-weight:700;color:#ff734a;font-family:'Space Grotesk';">—</div>
+          </div>
+        </div>
+      </div>
+      <div id="mic-result" style="min-height:32px;"></div>
+    </div>
+    <div id="mic-next" style="display:none;"><button class="btn-gold" onclick="buildScannerStep(3)" style="width:100%;padding:13px;border-radius:14px;font-size:14px;">Next → Confirm</button></div>`;
+
+  return `${dots(2)}
+  <p class="font-label text-xs mb-2" style="color:#ffd16c;letter-spacing:.1em;">STEP 2 OF 3 — PERFORM TEST</p>
+  <h3 style="font-family:'Plus Jakarta Sans';font-size:17px;font-weight:700;color:#e5e3ff;margin-bottom:12px;">${m.name}</h3>
+  ${content}`;
+}
+
+function setHandResult(s){scSelectedNostril=s;const L=document.getElementById('hand-L-val'),R=document.getElementById('hand-R-val');L.textContent=s==='left'?'STRONG':'gentle';R.textContent=s==='right'?'STRONG':'gentle';document.getElementById('hand-next').style.display='block';}
+function setCottonResult(s){scSelectedNostril=s;document.getElementById('cotton-next').style.display='block';}
+
+let micActive2=false;
+function toggleMicScan(){
+  if(micActive2){clearInterval(micInterval);micActive2=false;document.getElementById('mic-ico').textContent='🎙️';document.getElementById('mic-lbl').textContent='TAP TO SCAN';return;}
+  micActive2=true;document.getElementById('mic-ico').textContent='⏹️';document.getElementById('mic-lbl').textContent='SCANNING...';
+  const dom=Math.random()>.5?'left':'right';const bias=dom==='left'?[1.4,.6]:[.6,1.4];
+  let t=0,lSum=0,rSum=0;
+  micInterval=setInterval(()=>{
+    t++;
+    const lv=Math.min(95,Math.max(5,28+bias[0]*22*(.7+.3*Math.random())+9*Math.sin(t*.45)));
+    const rv=Math.min(95,Math.max(5,28+bias[1]*22*(.7+.3*Math.random())+9*Math.sin(t*.45+1)));
+    lSum+=lv;rSum+=rv;
+    const lb=document.getElementById('mic-L-bar'),rb=document.getElementById('mic-R-bar');
+    const lv2=document.getElementById('mic-L-val'),rv2=document.getElementById('mic-R-val');
+    if(lb)lb.style.height=lv+'%';if(rb)rb.style.height=rv+'%';
+    if(lv2)lv2.textContent=Math.round(lv)+'%';if(rv2)rv2.textContent=Math.round(rv)+'%';
+    if(t>=18){
+      clearInterval(micInterval);micActive2=false;
+      const winner=lSum>rSum?'left':'right';scSelectedNostril=winner;
+      const wc=winner==='left'?'#81ecff':'#ff734a',wn=winner==='left'?'Iḍā (Moon)':'Piṅgalā (Sun)';
+      const mr=document.getElementById('mic-result');
+      if(mr)mr.innerHTML=`<div style="padding:9px;background:rgba(255,209,108,.06);border-radius:9px;border:1px solid rgba(255,209,108,.18);"><span style="font-family:'Space Grotesk';font-size:11px;font-weight:700;color:#ffd16c;">SCAN COMPLETE — </span><span style="font-size:12px;color:${wc};">${wn} dominant (${Math.round(Math.max(lSum,rSum)/t)}%)</span></div>`;
+      const mn=document.getElementById('mic-next');if(mn)mn.style.display='block';
+    }
+  },160);
+}
+
+function scanStep3(){
+  return `${dots(3)}
+  <p class="font-label text-xs mb-2" style="color:#ffd16c;letter-spacing:.1em;">STEP 3 OF 3 — CONFIRM</p>
+  <h3 style="font-family:'Plus Jakarta Sans';font-size:17px;font-weight:700;color:#e5e3ff;margin-bottom:12px;">What did you detect?</h3>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+    <div class="nostril-card ${scSelectedNostril==='left'?'sel-left':''}" id="pick-left" onclick="pickNostril('left')">
+      <div style="font-size:28px;text-align:center;margin-bottom:6px;">🌙</div>
+      <div style="font-size:13px;font-weight:700;color:#81ecff;text-align:center;font-family:'Plus Jakarta Sans';">Left Nostril</div>
+      <div style="font-size:11px;color:#74738b;text-align:center;margin-top:2px;line-height:1.5;">Iḍā Nāḍī<br>Moon · Creative</div>
+      <div style="height:4px;border-radius:2px;background:rgba(70,70,92,.4);margin-top:8px;overflow:hidden;"><div id="pick-L-bar" style="height:100%;border-radius:2px;background:linear-gradient(90deg,#81ecff,#00d4ec);width:${scSelectedNostril==='left'?'85':'20'}%;transition:width .3s;"></div></div>
+    </div>
+    <div class="nostril-card ${scSelectedNostril==='right'?'sel-right':''}" id="pick-right" onclick="pickNostril('right')">
+      <div style="font-size:28px;text-align:center;margin-bottom:6px;">☀️</div>
+      <div style="font-size:13px;font-weight:700;color:#ff734a;text-align:center;font-family:'Plus Jakarta Sans';">Right Nostril</div>
+      <div style="font-size:11px;color:#74738b;text-align:center;margin-top:2px;line-height:1.5;">Piṅgalā Nāḍī<br>Sun · Logical</div>
+      <div style="height:4px;border-radius:2px;background:rgba(70,70,92,.4);margin-top:8px;overflow:hidden;"><div id="pick-R-bar" style="height:100%;border-radius:2px;background:linear-gradient(90deg,#ff734a,#ffd16c);width:${scSelectedNostril==='right'?'85':'20'}%;transition:width .3s;"></div></div>
+    </div>
+  </div>
+  ${scSelectedNostril==='both'?`<div style="padding:10px;background:rgba(255,209,108,.08);border-radius:12px;text-align:center;margin-bottom:14px;border:1px solid rgba(255,209,108,.2);"><span style="font-size:13px;color:#ffd16c;font-weight:700;">⚖ Sushumna detected — Both nostrils equal!</span></div>`:''}
+  <div style="background:#17172f;border-radius:14px;padding:14px;margin-bottom:14px;">
+    <p style="font-family:'Space Grotesk';font-size:11px;color:#aaa8c3;letter-spacing:.1em;margin-bottom:8px;">HOW CERTAIN ARE YOU?</p>
+    <input type="range" min="1" max="100" value="${scConfidence}" id="conf-slider" oninput="scConfidence=parseInt(this.value);document.getElementById('conf-lbl').textContent=this.value+'% confident'" style="width:100%;margin-bottom:6px;">
+    <div style="display:flex;justify-content:space-between;"><span style="font-size:11px;color:#74738b;">Unsure</span><span id="conf-lbl" style="font-size:12px;font-weight:700;color:#ffd16c;font-family:'Space Grotesk';">${scConfidence}% confident</span><span style="font-size:11px;color:#74738b;">Very clear</span></div>
+  </div>
+  <button class="btn-gold" onclick="buildScannerStep(4)" style="width:100%;padding:13px;border-radius:14px;font-size:14px;${scSelectedNostril?'':'opacity:.5;pointer-events:none;'}" ${scSelectedNostril?'':'disabled'}>
+    Confirm My Reading →
+  </button>`;
+}
+
+function pickNostril(s){
+  scSelectedNostril=s;
+  buildScannerStep(3);
+}
+
+function scanStep4(){
+  const isLeft=scSelectedNostril==='left';
+  const isBoth=scSelectedNostril==='both';
+  activeNadi=isBoth?'both':scSelectedNostril;
+  updateModeDisplay();
+
+  if(isBoth) return `
+    <div style="background:linear-gradient(135deg,rgba(60,40,0,.28),rgba(255,209,108,.07));border:1.5px solid rgba(255,209,108,.3);border-radius:20px;padding:20px;text-align:center;margin-bottom:14px;">
+      <div style="font-size:52px;margin-bottom:8px;">⚖️</div>
+      <div style="font-family:'Space Grotesk';font-size:11px;color:#ffd16c;letter-spacing:.14em;margin-bottom:6px;">SUSHUMNA ACTIVE</div>
+      <div style="font-family:'Plus Jakarta Sans';font-size:22px;font-weight:700;color:#ffd16c;margin-bottom:8px;">Perfect Balance!</div>
+      <p style="font-size:12px;color:#aaa8c3;line-height:1.7;">Both nostrils equally open. Sushumna — the central channel — is active. Rarest state: ideal for deep meditation and peak learning of any kind.</p>
+    </div>
+    <div style="background:#111127;border-radius:16px;padding:14px;margin-bottom:14px;border:1px solid rgba(255,209,108,.15);">
+      <div style="font-family:'Space Grotesk';font-size:11px;color:#ffd16c;letter-spacing:.1em;margin-bottom:10px;">IDEAL RIGHT NOW</div>
+      ${['Deep meditation or Pranayama','Any subject — math or creative equally','Cross-hemisphere problem solving','Ideal exam preparation state'].map(a=>`<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;"><div style="width:5px;height:5px;border-radius:50%;background:#ffd16c;margin-top:5px;flex-shrink:0;box-shadow:0 0 5px rgba(255,209,108,.6);"></div><span style="font-size:12px;color:#aaa8c3;">${a}</span></div>`).join('')}
+    </div>
+    <button class="btn-gold" onclick="closeScanner()" style="width:100%;padding:13px;border-radius:14px;font-size:14px;">Done — Let's Train!</button>`;
+
+  const ac=isLeft?'#81ecff':'#ff734a';
+  const name=isLeft?'Iḍā (Moon)':'Piṅgalā (Sun)';
+  const mode=isLeft?'Moon Mage 🌙':'Sun Dragon 🐉';
+  const good=isLeft?['Reading & creative writing','Art, music, drawing','Storytelling & imagination','Calming, wind-down tasks']:['Mathematics & equations','Science & logic problems','Coding & structured work','Exams & analytical tasks'];
+  const bad=isLeft?['Heavy maths right now','Analytical reasoning tests']:['Creative writing','Relaxation before sleep'];
+  const hack=isLeft
+    ?{t:'Need Sun Dragon instead?',d:'Lie on your LEFT side 5-10 min, or squeeze your LEFT armpit — your right nostril will open.'}
+    :{t:'Need Moon Mage instead?',d:'Lie on your RIGHT side 5-10 min, or squeeze your RIGHT armpit — your left nostril will open.'};
+
+  return `
+    <div class="scanner-result-${isLeft?'ida':'pingala'}" style="border-radius:20px;padding:20px;text-align:center;margin-bottom:14px;">
+      <div style="font-size:52px;margin-bottom:8px;animation:floatY 3s ease-in-out infinite;">${isLeft?'🌙':'☀️'}</div>
+      <div style="font-family:'Space Grotesk';font-size:11px;color:${ac};letter-spacing:.14em;margin-bottom:5px;">${isLeft?'IḌĀ NĀḌĪ ACTIVE':'PIṄGALĀ NĀḌĪ ACTIVE'}</div>
+      <div style="font-family:'Plus Jakarta Sans';font-size:22px;font-weight:700;color:${ac};margin-bottom:6px;">${name}</div>
+      <p style="font-size:12px;color:#aaa8c3;line-height:1.7;margin-bottom:12px;">${isLeft?'Left nostril dominant — Lunar energy — creative right brain':'Right nostril dominant — Solar energy — logical left brain'}</p>
+      <div style="display:inline-block;padding:8px 18px;border-radius:999px;background:${ac}22;border:1.5px solid ${ac}55;"><span style="font-size:13px;font-weight:700;color:${ac};font-family:'Space Grotesk';">Activate ${mode} Mode</span></div>
+      <div style="margin-top:10px;font-size:10px;color:#74738b;">${scConfidence}% confident · ${scSelectedMethod?.name}</div>
+    </div>
+    <div style="background:#111127;border-radius:16px;padding:14px;margin-bottom:12px;border:1px solid rgba(70,70,92,.2);">
+      <div style="font-family:'Space Grotesk';font-size:11px;color:${ac};letter-spacing:.1em;margin-bottom:8px;">IDEAL RIGHT NOW</div>
+      ${good.map(a=>`<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:7px;"><div style="width:5px;height:5px;border-radius:50%;background:${ac};margin-top:5px;flex-shrink:0;box-shadow:0 0 5px ${ac}88;"></div><span style="font-size:12px;color:#aaa8c3;">${a}</span></div>`).join('')}
+      <div style="margin-top:10px;padding-top:10px;border-top:1px solid rgba(70,70,92,.2);">
+        <div style="font-size:11px;color:#74738b;margin-bottom:6px;">NOT ideal for:</div>
+        ${bad.map(a=>`<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:5px;"><div style="width:5px;height:5px;border-radius:50%;background:#46465c;margin-top:5px;flex-shrink:0;"></div><span style="font-size:12px;color:#46465c;">${a}</span></div>`).join('')}
+      </div>
+    </div>
+    <div style="background:#111127;border-radius:16px;padding:14px;margin-bottom:14px;border:1px solid rgba(255,209,108,.18);">
+      <div style="display:flex;gap:12px;align-items:flex-start;">
+        <div style="font-size:26px;flex-shrink:0;">${isLeft?'🐉':'🌙'}</div>
+        <div><div style="font-family:'Space Grotesk';font-size:12px;font-weight:700;color:#ffd16c;margin-bottom:4px;">${hack.t}</div><div style="font-size:12px;color:#aaa8c3;line-height:1.6;">${hack.d}</div></div>
+      </div>
+    </div>
+    <button class="btn-gold" onclick="closeScanner()" style="width:100%;padding:13px;border-radius:14px;font-size:14px;margin-bottom:8px;">Done — Let's Train!</button>
+    <button class="btn-outline" onclick="buildScannerStep(0);scSelectedMethod=null;scSelectedNostril=null;" style="width:100%;padding:11px;border-radius:14px;font-size:12px;">Scan Again</button>`;
+}
+
+function updateModeDisplay(){
+  const isLeft=activeNadi==='left', isBoth=activeNadi==='both';
+  // Home indicator
+  const hi=document.getElementById('home-nadi-indicator');
+  if(hi){
+    if(isBoth) hi.innerHTML=`<div style="width:8px;height:8px;border-radius:50%;background:#ffd16c;box-shadow:0 0 8px rgba(255,209,108,.7);animation:pulseO 2s infinite;"></div><span style="font-family:'Space Grotesk';font-size:12px;color:#ffd16c;">⚖ Sushumna active — perfect balance!</span>`;
+    else if(isLeft) hi.innerHTML=`<div style="width:8px;height:8px;border-radius:50%;background:#81ecff;box-shadow:0 0 8px rgba(129,236,255,.7);animation:pulseO 2s infinite;"></div><span style="font-family:'Space Grotesk';font-size:12px;color:#81ecff;">☽ Iḍā active — Great for creative work!</span>`;
+    else hi.innerHTML=`<div style="width:8px;height:8px;border-radius:50%;background:#ff734a;box-shadow:0 0 8px rgba(255,115,74,.7);animation:pulseO 2s infinite;"></div><span style="font-family:'Space Grotesk';font-size:12px;color:#ff734a;">☀ Piṅgalā active — Great for Maths!</span>`;
+  }
+  // Segment 3 mode display
+  const mn=document.getElementById('s3-mode-name'),me=document.getElementById('s3-mode-emoji'),md=document.getElementById('s3-mode-desc'),mc=document.getElementById('s3-mode-display');
+  if(mn&&me&&md&&mc){
+    if(isBoth){me.textContent='⚖️';mn.textContent='Sushumna Balance';mn.style.color='#ffd16c';md.textContent='Both nostrils equal — peak state for all tasks';mc.style.background='linear-gradient(135deg,rgba(60,40,0,.25),rgba(255,209,108,.07))';mc.style.borderColor='rgba(255,209,108,.3)';}
+    else if(isLeft){me.textContent='🌙';mn.textContent='Moon Mage Mode';mn.style.color='#81ecff';md.textContent='Iḍā dominant — Left nostril open — Creativity & Art';mc.style.background='linear-gradient(135deg,rgba(0,83,98,.2),rgba(129,236,255,.07))';mc.style.borderColor='rgba(129,236,255,.28)';}
+    else{me.textContent='☀️';mn.textContent='Sun Dragon Mode';mn.style.color='#ff734a';md.textContent='Piṅgalā dominant — Right nostril open — Logic & Maths';mc.style.background='linear-gradient(135deg,rgba(255,115,74,.18),rgba(176,47,0,.1))';mc.style.borderColor='rgba(255,115,74,.3)';}
+  }
+}
+
+// ═══ APP FUNCTIONS ═══
+function showScreen(n){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  const t=document.getElementById('screen-'+n);
+  if(t)t.classList.add('active');
+  document.getElementById('scroll-area')?.scrollTo(0,0);
+}
+function setNav(btn){
+  document.querySelectorAll('.nav-btn').forEach(b=>{b.classList.remove('nav-active');const i=b.querySelector('.nav-ico');const l=b.querySelector('.nav-lbl');if(i)i.style.color='#aaa8c3';if(l)l.style.color='#74738b';});
+  btn.classList.add('nav-active');
+  const i=btn.querySelector('.nav-ico');const l=btn.querySelector('.nav-lbl');
+  if(i)i.style.color='#ffd16c';if(l)l.style.color='#ffd16c';
+}
+
+// Breath
+function startBreathing(){
+  const btn=document.getElementById('breathe-btn');
+  if(breathIv){clearInterval(breathIv);breathIv=null;btn.innerHTML='<span class="material-symbols-outlined" style="font-size:14px;">mic</span>Start';return;}
+  btn.innerHTML='<span class="material-symbols-outlined" style="font-size:14px;">stop</span>Stop';
+  let phase='inhale',count=4;
+  const orb=document.getElementById('breath-orb'),ins=document.getElementById('breath-instruction'),cnt=document.getElementById('breath-count'),bar=document.getElementById('breath-level-bar'),bal=document.getElementById('balloon');
+  let bpos=38,lvl=0;
+  breathIv=setInterval(()=>{
+    count--;cnt.textContent=count;
+    if(phase==='exhale'){lvl=Math.min(100,lvl+14);bar.style.width=lvl+'%';bpos=Math.max(12,bpos-5);if(bal)bal.style.top=bpos+'%';}
+    else{lvl=Math.max(0,lvl-8);bar.style.width=lvl+'%';}
+    if(count<=0){
+      if(phase==='inhale'){phase='hold';count=2;ins.textContent='HOLD';ins.style.color='#ffd16c';orb.style.boxShadow='0 0 30px rgba(255,209,108,.35)';}
+      else if(phase==='hold'){phase='exhale';count=6;ins.textContent='EXHALE';ins.style.color='#ff734a';orb.style.boxShadow='0 0 30px rgba(255,115,74,.35)';}
+      else{phase='inhale';count=4;ins.textContent='INHALE';ins.style.color='#81ecff';orb.style.boxShadow='0 0 30px rgba(129,236,255,.3)';bpos=Math.min(68,bpos+14);if(bal)bal.style.top=bpos+'%';}
+    }
+  },1000);
+}
+
+// Balancer
+function startBalancer(){
+  if(balancerIv){clearInterval(balancerIv);balancerIv=null;return;}
+  const ind=document.getElementById('balance-indicator');
+  let drift=0;
+  balancerIv=setInterval(()=>{drift+=(Math.random()-.5)*3;drift=Math.max(-28,Math.min(28,drift));const pos=50+drift;ind.style.left=pos+'%';const o=Math.abs(drift);ind.style.background=o<5?'radial-gradient(circle,#ffd16c,#fdc003)':o<14?'radial-gradient(circle,#81ecff,#00d4ec)':'radial-gradient(circle,#ff734a,#b02f00)';ind.style.boxShadow=o<5?'0 0 16px rgba(255,209,108,.7)':o<14?'0 0 14px rgba(129,236,255,.6)':'0 0 14px rgba(255,115,74,.6)';},480);
+}
+
+// Bhramari
+function startBhramari(){
+  if(humIv){clearInterval(humIv);humIv=null;return;}
+  let hum=0,dir=1;
+  humIv=setInterval(()=>{hum+=dir*(Math.random()*7+2);if(hum>=100){hum=100;dir=-1;}if(hum<=0){hum=0;dir=1;}const bar=document.getElementById('hum-bar');if(bar)bar.style.width=hum+'%';const bee=document.getElementById('bee-orb');if(bee){bee.style.transform=`scale(${1+hum/100*.28})`;bee.style.boxShadow=`0 0 ${hum*.35}px rgba(255,209,108,${hum/220})`;}},180);
+}
+
+// Mode select
+function selectMode(m){
+  const sc=document.getElementById('sun-card'),mc=document.getElementById('moon-card');
+  const an=document.getElementById('active-nadi'),nd=document.getElementById('nadi-desc');
+  if(m==='sun'){sc.style.borderColor='rgba(255,115,74,.6)';sc.style.boxShadow='0 0 18px rgba(255,115,74,.18)';mc.style.borderColor='rgba(129,236,255,.18)';mc.style.boxShadow='none';}
+  else{mc.style.borderColor='rgba(129,236,255,.55)';mc.style.boxShadow='0 0 18px rgba(129,236,255,.18)';sc.style.borderColor='rgba(255,115,74,.18)';sc.style.boxShadow='none';}
+}
+
+// Tattwa
+const TATTWAS={earth:{c:'#ffd16c',t:'🟨 Earth (Pṛthvī) — Stable and grounded. Perfect for focused work.'},water:{c:'#81ecff',t:'🔵 Water (Āpas) — Fluid and creative. Let ideas flow.'},fire:{c:'#ff734a',t:'🔴 Fire (Tejas) — High energy! Try Bhramari to balance.'},air:{c:'#e5e3ff',t:'⬜ Air (Vāyu) — Scattered. Practice slow breathing to anchor.'},space:{c:'#c77dff',t:'🔘 Space (Ākāśa) — Deeply peaceful. Ideal for meditation.'}};
+function selectTattwa(t){const d=TATTWAS[t];const r=document.getElementById('tattwa-result');const tx=document.getElementById('tattwa-text');tx.textContent=d.t;tx.style.color=d.c;r.classList.remove('hidden');r.style.background=d.c+'10';r.style.borderColor=d.c+'40';}
+
+// ═══ SPLASH ═══
+const starsEl=document.getElementById('splash-stars');
+for(let i=0;i<90;i++){const s=document.createElement('div');s.style.cssText=`position:absolute;width:${Math.random()*2+.5}px;height:${Math.random()*2+.5}px;border-radius:50%;background:#fff;left:${Math.random()*100}%;top:${Math.random()*100}%;opacity:${Math.random()*.45+.05};`;starsEl.appendChild(s);}
+const loadTxt=['AWAKENING BREATH INTELLIGENCE...','LOADING PAÑCHA KALĀ MODULES...','CALIBRATING NĀḌĪ SENSORS...','SUMMONING YOUR SPIRIT AVATAR...','ENTERING THE CELESTIAL LAB...'];
+let sp=0,ti=0;
+const sbar=document.getElementById('splash-bar'),stxt=document.getElementById('splash-txt');
+renderAvatar(document.getElementById('splash-av'),1,72,72);
+const spIv=setInterval(()=>{
+  sp+=1.8;sbar.style.width=Math.min(sp,100)+'%';
+  if(sp%22<2&&ti<loadTxt.length-1)stxt.textContent=loadTxt[++ti];
+  if(sp>=100){clearInterval(spIv);setTimeout(()=>{const el=document.getElementById('splash');el.style.transition='opacity .6s';el.style.opacity='0';setTimeout(()=>{el.style.display='none';const app=document.getElementById('app');app.classList.remove('hidden');app.classList.add('flex');renderAllAvatars();},600);},300);}
+},35);
+</script>
+</body>
+</html>
